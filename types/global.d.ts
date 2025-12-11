@@ -7,14 +7,16 @@ declare global {
     suggestedValue?: string;
   }
 
-  interface AIForm {
-    id: string;
-    title: string;
-    fields: AIField[];
-    sourcePdfUrl?: string;
-    filledPdfUrl?: string;
-    country: string;
-  }
+  // interface AIForm {
+  //   id: string;
+  //   title: string;
+  //   fields: AIField[];
+  //   sourcePdfUrl?: string;
+  //   filledPdfUrl?: string;
+  //   country: string;
+  // }
+
+  // mke it dynamic
 
   interface AppUser {
     id: string;
