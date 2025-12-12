@@ -1,9 +1,7 @@
-import React from 'react'
+"use client"
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+import UploadBox from "@/app/(private)/forms/upload/sub-module/upload";
+
+export default function UploadPage() {
+  return <UploadBox />;
 }
-
-export default page
