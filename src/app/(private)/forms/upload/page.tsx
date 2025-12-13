@@ -2,12 +2,17 @@
 
 import UploadBox from "@/app/(private)/forms/upload/sub-module/upload";
 import Alert from "@/components/shared/Alert";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 export default function UploadPage() {
 
-   const [openAlert, setopenAlert] = useState(true)
+   const [openAlert, setopenAlert] = useState(true);
+   
+   const handleConfirm=()=>{
+    console.log('hi')
+    setopenAlert(false);
+   }
 
     return (
         <>
@@ -17,7 +22,7 @@ export default function UploadPage() {
                 description="This cannot be undone."
                 confirmText="Delete"
                 cancelText="Cancel"
-                onConfirm={() => console.log("Deleted")}
+                onConfirm={()=>handleConfirm()}
                 isopen={openAlert}
                 setisopen={setopenAlert}
             >
