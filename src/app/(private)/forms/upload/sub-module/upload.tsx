@@ -8,6 +8,7 @@ export default function UploadBox() {
   const [loading, setLoading] = useState(false);
 
   const onSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("e is..", e)
     const f = e.target.files?.[0];
     if (!f) return;
     if (f.type !== "application/pdf") return setError("Only PDF allowed");
