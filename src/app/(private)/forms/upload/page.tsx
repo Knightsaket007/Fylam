@@ -7,11 +7,7 @@ import { useState } from "react";
 
 export default function UploadPage() {
 
-   const [openAlert, setopenAlert] = useState(false)
-    setTimeout(() => {
-      setopenAlert(true)
-
-    }, 1200);
+   const [openAlert, setopenAlert] = useState(true)
 
     return (
         <>

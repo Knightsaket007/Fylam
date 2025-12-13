@@ -20,7 +20,7 @@ interface AlertProps {
   cancelText?: string;
   onConfirm: () => void;
   isopen:boolean;
-  setisopen:()=>boolean;
+  setisopen:React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Alert({
