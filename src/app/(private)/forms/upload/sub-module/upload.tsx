@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 export default function UploadBox() {
@@ -64,13 +65,13 @@ export default function UploadBox() {
 
       {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
 
-      <button
+      <Button
         onClick={upload}
         disabled={!file || loading}
-        className="mt-6 w-full rounded-lg bg-black px-4 py-3 text-white disabled:opacity-50"
+        className="mt-6 w-full "
       >
         {loading ? "Processing..." : "Upload & Detect"}
-      </button>
+      </Button>
     </div>
     </>
     
