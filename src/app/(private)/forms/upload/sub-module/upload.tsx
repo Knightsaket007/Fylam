@@ -31,6 +31,9 @@ export default function UploadBox() {
   };
 
   return (
+
+    <>
+
     <div className="rounded-xl border border-gray-300 bg-white p-8 shadow-sm">
       <label
         htmlFor="pdf"
@@ -69,5 +72,7 @@ export default function UploadBox() {
         {loading ? "Processing..." : "Upload & Detect"}
       </button>
     </div>
+    </>
+    
   );
 }
