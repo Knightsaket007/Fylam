@@ -68,7 +68,7 @@ export default function UploadBox() {
       <Button
         onClick={upload}
         disabled={!file || loading}
-        className="mt-6 w-full "
+        className="mt-6 w-full cursor-pointer"
       >
         {loading ? "Processing..." : "Upload & Detect"}
       </Button>
