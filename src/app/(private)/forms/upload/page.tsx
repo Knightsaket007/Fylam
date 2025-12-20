@@ -28,7 +28,24 @@ export default function UploadPage() {
             >
                 {/* <Button variant="outline" onClick={clickhandler}>Delete File</Button> */}
             </Alert>
-            <UploadBox />
+
+
+            <div className="min-h-screen bg-gray-50 flex flex-col items-center py-16 px-4">
+  <h1 className="text-2xl font-semibold mb-2">Upload Your PDF</h1>
+  <p className="text-gray-600 mb-8 text-center max-w-md">
+    Upload your PDF and let Fylam detect the fields automatically.
+  </p>
+
+  <div className="w-full max-w-lg">
+    <UploadBox />
+  </div>
+
+  <div className="mt-6 text-center text-sm text-gray-500">
+    Supported: Visa, Tax, Insurance forms. Max file size 10MB.
+  </div>
+</div>
+
+            {/* <UploadBox /> */}
         </>
     )
 }
