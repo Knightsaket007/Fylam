@@ -4,6 +4,7 @@ import UploadBox from "@/app/(private)/forms/upload/sub-module/upload";
 import Alert from "@/components/shared/Alert";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import DynamicForm from "./sub-module/DynamicForm";
 
 export default function UploadPage() {
 
@@ -62,7 +63,9 @@ export default function UploadPage() {
   </Button>
 </div>
 
-{/* {mode === "upload" ? <UploadBox /> : <ManualForm />} */}
+{mode === "upload" ? <UploadBox /> : <DynamicForm  onSubmit={(data) => {
+    console.log("Manual data:", data);
+  }}/>}
 
 
       {/* <UploadBox /> */}
