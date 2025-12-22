@@ -14,14 +14,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-type FieldType = "text" | "number" | "date";
-
-type Field = {
-  id: string;
-  label: string;
-  type: FieldType;
-  value?: string;
-};
 
 export default function DynamicForm({
   initialFields = [],
@@ -67,20 +59,17 @@ export default function DynamicForm({
             className="w-1/3"
           />
 
-         
 
           <Select onValueChange={(value) => update(f.id, "type", value as FieldType)}>
             <SelectTrigger value={f.type} className="w-[180px]" >
-              <SelectValue placeholder="Select a fruit" />
+              <SelectValue placeholder="Select type" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Fruits</SelectLabel>
+                <SelectLabel>Field types</SelectLabel>
                 <SelectItem value="text">Text</SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="blueberry">Blueberry</SelectItem>
-                <SelectItem value="grapes">Grapes</SelectItem>
-                <SelectItem value="pineapple">Pineapple</SelectItem>
+                <SelectItem value="number">Number</SelectItem>
+                <SelectItem value="date">Date</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
