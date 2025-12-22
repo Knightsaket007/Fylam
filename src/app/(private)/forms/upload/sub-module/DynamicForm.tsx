@@ -4,6 +4,16 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 type FieldType = "text" | "number" | "date";
 
 type Field = {
@@ -57,17 +67,23 @@ export default function DynamicForm({
             className="w-1/3"
           />
 
-          <select
-            value={f.type}
-            onChange={(e) =>
-              update(f.id, "type", e.target.value as FieldType)
-            }
-            className="rounded-md border px-2"
-          >
-            <option value="text">Text</option>
-            <option value="number">Number</option>
-            <option value="date">Date</option>
-          </select>
+         
+
+          <Select onValueChange={(value) => update(f.id, "type", value as FieldType)}>
+            <SelectTrigger value={f.type} className="w-[180px]" >
+              <SelectValue placeholder="Select a fruit" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                <SelectItem value="text">Text</SelectItem>
+                <SelectItem value="banana">Banana</SelectItem>
+                <SelectItem value="blueberry">Blueberry</SelectItem>
+                <SelectItem value="grapes">Grapes</SelectItem>
+                <SelectItem value="pineapple">Pineapple</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
 
           <Input
             type={f.type}
