@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import InputFiledVariation from "./util/InputFiledVariation";
 
 
 export default function DynamicForm({
@@ -79,6 +80,7 @@ export default function DynamicForm({
             placeholder={f.label}
             onChange={(e) => update(f.id, "value", e.target.value)}
           />
+          <InputFiledVariation/>
         </div>
       ))}
 
