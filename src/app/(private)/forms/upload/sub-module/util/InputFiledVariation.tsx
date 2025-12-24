@@ -10,28 +10,36 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { Input } from '@/components/ui/input'
 
-const InputFiledVariation = () => {
+const InputFiledVariation = (type:FieldType) => {
      const [date, setDate] = React.useState<Date>()
-  return (
-    <>
-       <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          data-empty={!date}
-          className="data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal"
-        >
-          <CalendarIcon />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
-        <Calendar mode="single" selected={date} onSelect={setDate} />
-      </PopoverContent>
-    </Popover>
-    </>
-  )
+
+     if(type==="date"){
+
+       return (
+         <>
+            <Popover>
+           <PopoverTrigger asChild>
+             <Button
+               variant="outline"
+               data-empty={!date}
+               className="data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal"
+             >
+               <CalendarIcon />
+               {date ? format(date, "PPP") : <span>Pick a date</span>}
+             </Button>
+           </PopoverTrigger>
+           <PopoverContent className="w-auto p-0">
+             <Calendar mode="single" selected={date} onSelect={setDate} />
+           </PopoverContent>
+         </Popover>
+         </>
+       )
+     }
+     if(type==="text"){
+      return <Input type="email" placeholder="Email" />
+     }
 }
 
 export default InputFiledVariation

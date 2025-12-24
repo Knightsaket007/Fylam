@@ -80,7 +80,7 @@ export default function DynamicForm({
             placeholder={f.label}
             onChange={(e) => update(f.id, "value", e.target.value)}
           />
-          <InputFiledVariation/>
+          <InputFiledVariation type={f.type} />
         </div>
       ))}
 
