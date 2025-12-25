@@ -1,4 +1,4 @@
-type FieldType = "text" | "number" | "date";
+type FieldType = "text" | "number" | "date" | "email";
 
 type Field = {
   id: string;

@@ -12,7 +12,9 @@ import {
 } from "@/components/ui/popover"
 import { Input } from '@/components/ui/input'
 
-const InputFiledVariation = (type:FieldType) => {
+
+
+const InputFiledVariation = ({type}:{type:FieldType}) => {
      const [date, setDate] = React.useState<Date>()
 
      if(type==="date"){
@@ -37,8 +39,9 @@ const InputFiledVariation = (type:FieldType) => {
          </>
        )
      }
-     if(type==="text"){
-      return <Input type="email" placeholder="Email" />
+
+     if(type==="text" || type ==="number" || type=== "email"){
+      return <Input type={type} placeholder="Email" />
      }
 }
 
