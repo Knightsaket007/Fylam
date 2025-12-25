@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { InputField } from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 
 import {
   Select,
@@ -54,7 +54,7 @@ export default function DynamicForm({
     <div className="space-y-4 rounded-xl border bg-white p-6 shadow-sm">
       {fields.map((f) => (
         <div key={f.id} className="flex gap-2">
-          <InputField
+          <Input
             value={f.label}
             onChange={(e) => update(f.id, "label", e.target.value)}
             className="w-1/3"
@@ -76,7 +76,7 @@ export default function DynamicForm({
             </SelectContent>
           </Select>
 
-          <InputField
+          <Input
             type={f.type}
             placeholder={f.label}
             onChange={(e) => update(f.id, "value", e.target.value)}
