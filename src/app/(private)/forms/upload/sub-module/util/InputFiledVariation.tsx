@@ -41,7 +41,7 @@ const InputFiledVariation = ({type}:{type:FieldType}) => {
      }
 
      if(type==="text" || type ==="number" || type=== "email"){
-      return <Input type={type} placeholder="Email" />
+      return <Input type={type} placeholder={type} />
      }
 }
 
