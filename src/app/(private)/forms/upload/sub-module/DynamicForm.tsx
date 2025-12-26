@@ -76,9 +76,9 @@ export default function DynamicForm({
             </SelectContent>
           </Select>
 
-        
-          <InputFiledVariation type={f.type}  placeholder={f.label} onChange={(e) => update(f.id, "value", e.target.value)}/>
-          
+
+          <InputFiledVariation update={update} f={f} onChange={(e) => update(f.id, "value", e.target.value)} />
+
         </div>
       ))}
 

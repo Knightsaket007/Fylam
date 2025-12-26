@@ -13,17 +13,18 @@ import {
 import { Input } from '@/components/ui/input'
 
 
-
-interface propType {
-  type: FieldType,
-  props?: React.ComponentProps<"input">
+type propsType = React.ComponentProps<"input"> & {
+  f: Field
+  update: (id: string, key: keyof Field, value: string) => void
 }
 
 
-const InputFiledVariation = ({ type, ...props }: React.ComponentProps<"input">) => {
+
+const InputFiledVariation = ({f, update, ...props }:propsType) => {
+
   const [date, setDate] = React.useState<Date>()
 
-  if (type === "date") {
+  if (f.type === "date") {
 
     return (
       <>
@@ -39,15 +40,19 @@ const InputFiledVariation = ({ type, ...props }: React.ComponentProps<"input">) 
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">
-            <Calendar mode="single" selected={date} onSelect={setDate} />
+            <Calendar mode="single" selected={date} onSelect={(d) => {
+              console.log("d...", d)
+              setDate(d)                     // local state update
+              update?.(f.id, "value", d ? format(d, "yyyy-MM-dd") : "")     // parent ko bhi bhej do
+            }} />
           </PopoverContent>
         </Popover>
       </>
     )
   }
 
-  if (type === "text" || type === "number" || type === "email") {
-    return <Input type={type} {...props} />
+  if (f.type === "text" || f.type === "number" || f.type === "email") {
+    return <Input type={f.type} {...props} />
   }
 }
 
