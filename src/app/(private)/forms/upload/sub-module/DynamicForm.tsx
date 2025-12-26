@@ -26,6 +26,8 @@ export default function DynamicForm({
   const [fields, setFields] = useState<Field[]>(initialFields);
 
   const addField = () => {
+    
+
     setFields((p) => [
       ...p,
       {
@@ -45,8 +47,12 @@ export default function DynamicForm({
   const submit = () => {
     const data: Record<string, string> = {};
     fields.forEach((f) => {
-      if (f.value) data[f.label] = f.value;
+      if (f.value) {
+        console.log("fields...", f)
+        data[f.label] = f.value;
+      }
     });
+    console.log("data...", data)
     onSubmit(data);
   };
 

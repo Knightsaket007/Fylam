@@ -41,9 +41,8 @@ const InputFiledVariation = ({f, update, ...props }:propsType) => {
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">
             <Calendar mode="single" selected={date} onSelect={(d) => {
-              console.log("d...", d)
-              setDate(d)                     // local state update
-              update?.(f.id, "value", d ? format(d, "yyyy-MM-dd") : "")     // parent ko bhi bhej do
+              setDate(d)             
+              update?.(f.id, "value", d ? format(d, "yyyy-MM-dd") : "") 
             }} />
           </PopoverContent>
         </Popover>
@@ -52,7 +51,7 @@ const InputFiledVariation = ({f, update, ...props }:propsType) => {
   }
 
   if (f.type === "text" || f.type === "number" || f.type === "email") {
-    return <Input type={f.type} {...props} />
+    return <Input type={f.type} placeholder={f.label} {...props} />
   }
 }
 
