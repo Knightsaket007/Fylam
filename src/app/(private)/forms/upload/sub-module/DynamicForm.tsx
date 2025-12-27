@@ -25,8 +25,13 @@ export default function DynamicForm({
 }) {
   const [fields, setFields] = useState<Field[]>(initialFields);
 
+  // const checkvaldity=()=>{
+  //   fields.forEach(f=>{
+  //     if()
+  //   })
+  // }
+
   const addField = () => {
-    
 
     setFields((p) => [
       ...p,
@@ -34,6 +39,7 @@ export default function DynamicForm({
         id: crypto.randomUUID(),
         label: "New Field",
         type: "text",
+        error:false,
       },
     ]);
   };
