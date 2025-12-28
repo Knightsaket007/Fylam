@@ -14,6 +14,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import InputFiledVariation from "./util/InputFiledVariation";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 
 export default function DynamicForm({
@@ -44,27 +46,34 @@ export default function DynamicForm({
     ]);
   };
 
-const update = (id: string, key: keyof Field, value: string) => {
-  setFields((prev) => {
-    const isDuplicate =
-      key === "label" &&
-      prev.some(
-        (f) =>
-          f.id !== id &&
-          f.label.trim().toLowerCase() === value.trim().toLowerCase()
-      );
 
-    return prev.map((f) =>
-      f.id === id
-        ? {
+  const update = (id: string, key: keyof Field, value: string) => {
+    setFields((prev) => {
+      const isDuplicate =
+        key === "label" &&
+        prev.some(
+          (f) =>
+            f.id !== id &&
+            f.label.trim().toLowerCase() === value.trim().toLowerCase()
+        );
+
+      if (key === "label" && isDuplicate) {
+        toast.warning("Duplicate label", {
+          description: "Please write unique label", 
+        })
+      }
+
+      return prev.map((f) =>
+        f.id === id
+          ? {
             ...f,
             [key]: value,
             labelerror: key === "label" ? isDuplicate : f.labelerror,
           }
-        : f
-    );
-  });
-};
+          : f
+      );
+    });
+  };
 
 
   const submit = () => {
@@ -79,8 +88,11 @@ const update = (id: string, key: keyof Field, value: string) => {
     onSubmit(data);
   };
 
+
   return (
     <div className="space-y-4 rounded-xl border bg-white p-6 shadow-sm">
+      <Toaster />
+
       {fields.map((f) => (
         <div key={f.id} className="flex gap-2">
           <Input
