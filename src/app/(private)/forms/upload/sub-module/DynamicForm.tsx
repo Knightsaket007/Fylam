@@ -39,7 +39,7 @@ export default function DynamicForm({
       ...p,
       {
         id: crypto.randomUUID(),
-        label: "New Field",
+        label: `New Field ${fields.length+1}`,
         type: "text",
         labelerror: false,
       },
@@ -48,6 +48,9 @@ export default function DynamicForm({
 
 
   const update = (id: string, key: keyof Field, value: string) => {
+
+    let showToast = false;
+
     setFields((prev) => {
       const isDuplicate =
         key === "label" &&
@@ -58,9 +61,7 @@ export default function DynamicForm({
         );
 
       if (key === "label" && isDuplicate) {
-        toast.warning("Duplicate label", {
-          description: "Please write unique label", 
-        })
+        showToast = true;
       }
 
       return prev.map((f) =>
@@ -73,6 +74,12 @@ export default function DynamicForm({
           : f
       );
     });
+
+    if (showToast) {
+      toast.warning("Duplicate label", {
+        description: "Please write unique label",
+      });
+    }
   };
 
 
