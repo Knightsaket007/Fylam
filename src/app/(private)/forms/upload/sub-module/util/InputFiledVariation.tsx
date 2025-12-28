@@ -51,7 +51,7 @@ const InputFiledVariation = ({f, update, ...props }:propsType) => {
   }
 
   if (f.type === "text" || f.type === "number" || f.type === "email") {
-    return <Input type={f.type} placeholder={f.label} {...props} className={f.error ? "border-red-500" : ""}/>
+    return <Input type={f.type} placeholder={f.label} {...props} />
   }
 }
 

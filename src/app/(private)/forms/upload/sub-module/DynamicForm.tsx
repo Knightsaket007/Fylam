@@ -39,16 +39,33 @@ export default function DynamicForm({
         id: crypto.randomUUID(),
         label: "New Field",
         type: "text",
-        error:false,
+        labelerror: false,
       },
     ]);
   };
 
-  const update = (id: string, key: keyof Field, value: string) => {
-    setFields((p) =>
-      p.map((f) => (f.id === id ? { ...f, [key]: value } : f))
+const update = (id: string, key: keyof Field, value: string) => {
+  setFields((prev) => {
+    const isDuplicate =
+      key === "label" &&
+      prev.some(
+        (f) =>
+          f.id !== id &&
+          f.label.trim().toLowerCase() === value.trim().toLowerCase()
+      );
+
+    return prev.map((f) =>
+      f.id === id
+        ? {
+            ...f,
+            [key]: value,
+            labelerror: key === "label" ? isDuplicate : f.labelerror,
+          }
+        : f
     );
-  };
+  });
+};
+
 
   const submit = () => {
     const data: Record<string, string> = {};
@@ -69,7 +86,7 @@ export default function DynamicForm({
           <Input
             value={f.label}
             onChange={(e) => update(f.id, "label", e.target.value)}
-            className="w-1/3"
+            className={`w-1/3 ${f.labelerror ? "!border-red-500" : ""}`}
           />
 
 

@@ -5,5 +5,5 @@ type Field = {
   label: string;
   type: FieldType;
   value?: string;
-  error?:boolean
+  labelerror?:boolean
 };
