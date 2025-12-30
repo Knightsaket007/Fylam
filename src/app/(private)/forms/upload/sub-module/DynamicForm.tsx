@@ -41,9 +41,15 @@ export default function DynamicForm({
   };
 
   const deleteField = (id: string) => {
-    setFields((p) => p.filter((f) => f.id !== id));
-  }
+    // setFields((p) => p.filter((f) => f.id !== id));
+    setFields((p) => {
+      const fieldToDelete = p.find((f) => f.id === id);
+      if (!fieldToDelete) return p;
+      return p.filter((f) => f.id !== id);
+    });
+  };
 
+  
   const update = (id: string, key: keyof Field, value: string) => {
 
     let showToast = false;
@@ -100,7 +106,7 @@ export default function DynamicForm({
       {fields.map((f) => (
         <div key={f.id} className="flex gap-1 w-full md:items-center">
 
-          <button className="cursor-pointer relative group w-5 h-5">
+          <button className="cursor-pointer relative group w-5 h-5" onClick={deleteField.bind(null, f.id)} type="button" title="Delete field">
             <img
               src="https://img.icons8.com/carbon-copy/100/trash.png"
               alt="trash"
