@@ -26,11 +26,6 @@ export default function DynamicForm({
 }) {
   const [fields, setFields] = useState<Field[]>(initialFields);
 
-  // const checkvaldity=()=>{
-  //   fields.forEach(f=>{
-  //     if()
-  //   })
-  // }
 
   const addField = () => {
 
@@ -45,6 +40,9 @@ export default function DynamicForm({
     ]);
   };
 
+  const deleteField = (id: string) => {
+    setFields((p) => p.filter((f) => f.id !== id));
+  }
 
   const update = (id: string, key: keyof Field, value: string) => {
 
