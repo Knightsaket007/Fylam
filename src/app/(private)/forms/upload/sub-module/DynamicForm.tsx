@@ -24,7 +24,9 @@ export default function DynamicForm({
   initialFields?: Field[];
   onSubmit: (data: Record<string, string>) => void;
 }) {
+  
   const [fields, setFields] = useState<Field[]>(initialFields);
+  const [fieldCount, setFieldCount] = useState(fields.length);
 
 
   const addField = () => {
