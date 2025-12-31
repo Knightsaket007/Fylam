@@ -6,11 +6,19 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import DynamicForm from "./sub-module/DynamicForm";
 
+
+const initalField = {
+  id: crypto.randomUUID(),
+  label: "New Field 1",
+  type: "text" as FieldType,
+  labelerror: false,
+}
+
 export default function UploadPage() {
 
   const [openAlert, setopenAlert] = useState(true);
   const [mode, setMode] = useState<"upload" | "manual">("upload");
-  const [fields, setFields] = useState<Field[]>([]);
+  const [fields, setFields] = useState<Field[]>([initalField]);
 
   const handleConfirm = () => {
     console.log('hi')
@@ -56,9 +64,7 @@ export default function UploadPage() {
           }}
           setFields={setFields}
           fields={fields}
-
         />}
-
 
     </>
   )
