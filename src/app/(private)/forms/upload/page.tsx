@@ -5,6 +5,7 @@ import Alert from "@/components/shared/Alert";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import DynamicForm from "./sub-module/DynamicForm";
+import showAlert from "@/components/shared/Alert";
 
 
 const initalField = {
@@ -16,19 +17,25 @@ const initalField = {
 
 export default function UploadPage() {
 
-  const [openAlert, setopenAlert] = useState(true);
+  const [openAlert, setopenAlert] = useState(false);
   const [mode, setMode] = useState<"upload" | "manual">("upload");
   const [fields, setFields] = useState<Field[]>([initalField]);
 
-  const handleConfirm = () => {
-    console.log('hi')
-    setopenAlert(false);
+  const showCustAlert=()=>{
+    console.log('inside alert')
+    showAlert({
+      title:"hello world",
+      description:"jnsns ksnfkfnkd afnask",
+      onConfirm:()=>null,
+      isopen:true,
+    })
   }
+   
 
   return (
     <>
 
-      <Alert
+      {/* <Alert
         title="Delete Form?"
         description="This cannot be undone."
         confirmText="Delete"
@@ -37,7 +44,8 @@ export default function UploadPage() {
         isopen={openAlert}
         setisopen={setopenAlert}
       >
-      </Alert>
+      </Alert> */}
+      <Button onClick={showCustAlert}>Click Alert</Button>
 
       <div className="flex gap-2 mb-6">
         <Button

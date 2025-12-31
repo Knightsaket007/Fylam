@@ -9,51 +9,90 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-interface AlertProps {
-  // children: React.ReactNode;
+import { createRoot } from "react-dom/client";
+
+export interface AlertProps {
   title: string;
   description?: string;
   confirmText?: string;
   cancelText?: string;
   onConfirm: () => void;
-  isopen:boolean;
-  setisopen:React.Dispatch<React.SetStateAction<boolean>>;
+  isopen?: boolean;
 }
 
-export default function Alert({
-  // children,
+function Alert({
   title,
   description,
   confirmText = "Confirm",
   cancelText = "Cancel",
   onConfirm,
-  isopen,
-  setisopen
-}: AlertProps) {
+  isopen = true,
+  onClose,
+}: AlertProps & { onClose: () => void }) {
   return (
-    <AlertDialog open={isopen}>
-      <AlertDialogTrigger asChild>  
-        {/* {children} */}
-      </AlertDialogTrigger>
-
+    <AlertDialog open={isopen} onOpenChange={(open) => {
+      if (!open) onClose();
+    }}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
+
           {description && (
-            <AlertDialogDescription>{description}</AlertDialogDescription>
+            <AlertDialogDescription>
+              {description}
+            </AlertDialogDescription>
           )}
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={()=>setisopen(false)}>{cancelText}</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>
+          <AlertDialogCancel>
+            {cancelText}
+          </AlertDialogCancel>
+
+          <AlertDialogAction
+            onClick={onConfirm}
+          >
             {confirmText}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
+}
+
+
+export default function showAlert({
+  title,
+  description,
+  confirmText = "Confirm",
+  cancelText = "Cancel",
+  onConfirm,
+}: AlertProps) {
+  const div = document.createElement("div");
+  document.body.appendChild(div);
+
+  const root = createRoot(div);
+
+  const handleClose = () => {
+    root.unmount();
+    div.remove();
+  };
+
+ root.render(
+  <Alert
+    title={title}
+    description={description}
+    confirmText={confirmText}
+    cancelText={cancelText}
+    isopen={true}
+    onConfirm={() => {
+      onConfirm();
+      handleClose();
+    }}
+    onClose={handleClose}
+  />
+);
+
 }
