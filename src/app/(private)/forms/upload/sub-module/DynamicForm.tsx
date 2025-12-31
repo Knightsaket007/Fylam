@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -18,14 +18,18 @@ import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 
 export default function DynamicForm({
-  initialFields = [],
+  // initialFields = [],
   onSubmit,
+  setFields,
+  fields
 }: {
-  initialFields?: Field[];
+  // initialFields?: Field[];
   onSubmit: (data: Record<string, string>) => void;
+  setFields:React.Dispatch<React.SetStateAction<Field[]>>
+  fields:Field[]
 }) {
   
-  const [fields, setFields] = useState<Field[]>(initialFields);
+  // const [fields, setFields] = useState<Field[]>(initialFields);
   const [fieldCount, setFieldCount] = useState(fields.length);
 
 
@@ -35,11 +39,13 @@ export default function DynamicForm({
       ...p,
       {
         id: crypto.randomUUID(),
-        label: `New Field ${fields.length + 1}`,
+        label: `New Field ${fieldCount + 1}`,
         type: "text",
         labelerror: false,
       },
     ]);
+
+    setFieldCount((c) => c + 1);
   };
 
   const deleteField = (id: string) => {
