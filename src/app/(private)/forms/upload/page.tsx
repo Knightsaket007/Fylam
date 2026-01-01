@@ -17,7 +17,6 @@ const initalField = {
 
 export default function UploadPage() {
 
-  const [openAlert, setopenAlert] = useState(false);
   const [mode, setMode] = useState<"upload" | "manual">("upload");
   const [fields, setFields] = useState<Field[]>([initalField]);
 
@@ -26,7 +25,9 @@ export default function UploadPage() {
     showAlert({
       title:"hello world",
       description:"jnsns ksnfkfnkd afnask",
-      onConfirm:()=>null,
+      onConfirm:()=>{
+        // console.log('vajj')
+      },
       isopen:true,
     })
   }
@@ -35,16 +36,6 @@ export default function UploadPage() {
   return (
     <>
 
-      {/* <Alert
-        title="Delete Form?"
-        description="This cannot be undone."
-        confirmText="Delete"
-        cancelText="Cancel"
-        onConfirm={() => handleConfirm()}
-        isopen={openAlert}
-        setisopen={setopenAlert}
-      >
-      </Alert> */}
       <Button onClick={showCustAlert}>Click Alert</Button>
 
       <div className="flex gap-2 mb-6">
