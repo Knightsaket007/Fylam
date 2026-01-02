@@ -17,7 +17,7 @@ const initalField = {
 
 export default function UploadPage() {
 
-  const [mode, setMode] = useState<"upload" | "manual">("upload");
+  const [mode, setMode] = useState<"upload" | "prompt" | "manual" >("upload");
   const [fields, setFields] = useState<Field[]>([initalField]);
 
   const showCustAlert=()=>{
@@ -44,6 +44,13 @@ export default function UploadPage() {
           onClick={() => setMode("upload")}
         >
           Upload PDF
+        </Button>
+
+        <Button
+          variant={mode === "prompt" ? "default" : "outline"}
+          onClick={() => setMode("prompt")}
+        >
+          Prompt
         </Button>
 
         <Button
