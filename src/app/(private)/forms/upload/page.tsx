@@ -1,10 +1,10 @@
 "use client"
 
-import UploadBox from "@/app/(private)/forms/upload/sub-module/upload";
+import UploadBox from "@/app/(private)/forms/upload/sub-module/upload/upload";
 import Alert from "@/components/shared/Alert";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import DynamicForm from "./sub-module/DynamicForm";
+import DynamicForm from "./sub-module/fields/DynamicForm";
 import showAlert from "@/components/shared/Alert";
 
 
