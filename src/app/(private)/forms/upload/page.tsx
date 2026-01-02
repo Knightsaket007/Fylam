@@ -22,6 +22,18 @@ export default function UploadPage() {
   const [fields, setFields] = useState<Field[]>([initalField]);
   const [prompt, setPrompt] = useState<string>("");
 
+  fetch("/api/ai/analyze", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    source: "pdf",
+    data: {
+      text: extractedPdfText,
+    },
+  }),
+});
+
+
   const showCustAlert = () => {
     console.log('inside alert')
     showAlert({
