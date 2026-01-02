@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import DynamicForm from "./sub-module/fields/DynamicForm";
 import showAlert from "@/components/shared/Alert";
+import PromptBox from "./sub-module/promptBox/PromptBox";
 
 
 const initalField = {
@@ -17,21 +18,22 @@ const initalField = {
 
 export default function UploadPage() {
 
-  const [mode, setMode] = useState<"upload" | "prompt" | "manual" >("upload");
+  const [mode, setMode] = useState<"upload" | "prompt" | "manual">("upload");
   const [fields, setFields] = useState<Field[]>([initalField]);
+  const [prompt, setPrompt] = useState<string>("");
 
-  const showCustAlert=()=>{
+  const showCustAlert = () => {
     console.log('inside alert')
     showAlert({
-      title:"hello world",
-      description:"jnsns ksnfkfnkd afnask",
-      onConfirm:()=>{
+      title: "hello world",
+      description: "jnsns ksnfkfnkd afnask",
+      onConfirm: () => {
         // console.log('vajj')
       },
-      isopen:true,
+      isopen: true,
     })
   }
-   
+
 
   return (
     <>
@@ -63,14 +65,23 @@ export default function UploadPage() {
 
       {mode === "upload"
         ? <UploadBox />
-        :
-        <DynamicForm
-          onSubmit={(data) => {
-            console.log("Manual data:", data);
-          }}
-          setFields={setFields}
-          fields={fields}
-        />}
+        : (mode === "prompt") ?
+
+          <PromptBox
+            value={prompt}
+            setValue={setPrompt}
+            onSubmit={(text) => console.log(text)} />
+
+          :
+          <DynamicForm
+            onSubmit={(data) => {
+              console.log("Manual data:", data);
+            }}
+            setFields={setFields}
+            fields={fields}
+          />
+
+      }
 
     </>
   )
