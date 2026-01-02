@@ -16,10 +16,10 @@ export default function PromptBox({
     <div className="rounded-xl border bg-white p-6 shadow-sm space-y-4">
       <Textarea
         rows={8}
-        placeholder="Describe your details here..."
+        placeholder="Describe your details here... /n hi"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className="resize-none"
+        className="resize-none h-36"
       />
 
       <Button
