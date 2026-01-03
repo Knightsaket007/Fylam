@@ -30,10 +30,11 @@ ${input}
         const text = result.response.text();
 
         return JSON.parse(text);
-    } catch (e) {
+    } catch (e:unknown) {
         return {
             error: true,
             message: "AI could not process the document",
+            errorMessage: e,
         };
     }
 }
