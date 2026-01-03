@@ -38,10 +38,14 @@ export async function POST(req: NextRequest) {
 
     const result = await analyzeWithGemini(input);
 
-    return NextResponse.json({
-      success: true,
-      result,
-    });
+    if (result?.error) {
+      return NextResponse.json(
+        { success: false, message: result.message },
+        { status: 422 }
+      );
+    }
+
+    return NextResponse.json({ success: true, result });
   } catch (e) {
     return NextResponse.json(
       { error: "AI processing failed" },
