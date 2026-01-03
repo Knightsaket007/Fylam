@@ -22,7 +22,7 @@ export default function UploadPage() {
   const [fields, setFields] = useState<Field[]>([initalField]);
   const [prompt, setPrompt] = useState<string>("");
 
-  
+   const [value, setValue] = useState("");
 
   const showCustAlert = () => {
     console.log('inside alert')
@@ -35,6 +35,35 @@ export default function UploadPage() {
       isopen: true,
     })
   }
+
+
+   const submit = async () => {
+    if (!value.trim()) return;
+
+    // setLoading(true);
+
+    const res = await fetch("/api/ai/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        source: "prompt",
+        data: value,
+      }),
+    });
+
+    const data = await res.json();
+
+    // setLoading(false);
+
+    if (!res.ok || !data.success) {
+      // toast.error(data.message || "AI failed");
+      return;
+    }
+
+    console.log("AI result:", data.result);
+    // toast.success("Analysis complete");
+  };
+
 
 
   return (
