@@ -8,48 +8,52 @@ export async function POST(req: NextRequest) {
 
     if (!source || !data) {
       return NextResponse.json(
-        { error: "Invalid payload" },
+        { success: false, message: "Invalid payload" },
         { status: 400 }
       );
     }
 
     let input = "";
 
-    if (source === "pdf") {
-      input = data.text;
+    switch (source) {
+      case "pdf":
+        input = data.text;
+        break;
+
+      case "manual":
+        input = Object.entries(data)
+          .map(([k, v]) => `${k}: ${v}`)
+          .join("\n");
+        break;
+
+      case "prompt":
+        input = data;
+        break;
     }
 
-    if (source === "manual") {
-      input = Object.entries(data)
-        .map(([k, v]) => `${k}: ${v}`)
-        .join("\n");
-    }
-
-    if (source === "prompt") {
-      input = data;
-    }
-
-    if (!input) {
+    if (!input.trim()) {
       return NextResponse.json(
-        { error: "Empty input" },
-        { status: 400 }
+        { success: false, message: "Empty input" },
+        { status: 422 }
       );
     }
 
     const result = await analyzeWithGemini(input);
 
-    if (result?.error) {
-      return NextResponse.json(
-        { success: false, message: result.message },
-        { status: 422 }
-      );
-    }
+    return NextResponse.json({
+      success: true,
+      result,
+    });
 
-    return NextResponse.json({ success: true, result });
-  } catch (e) {
+  } catch (err) {
+    console.error("AI ERROR:", err);
+
     return NextResponse.json(
-      { error: "AI processing failed" },
-      { status: 500 }
+      {
+        success: false,
+        message: "AI could not process the document",
+      },
+      { status: 422 }
     );
   }
 }
