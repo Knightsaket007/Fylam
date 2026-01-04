@@ -22,7 +22,7 @@ export default function UploadPage() {
   const [fields, setFields] = useState<Field[]>([initalField]);
   const [prompt, setPrompt] = useState<string>("");
 
-   const [value, setValue] = useState("");
+  const [value, setValue] = useState("");
 
   const showCustAlert = () => {
     console.log('inside alert')
@@ -37,9 +37,10 @@ export default function UploadPage() {
   }
 
 
-   const submit = async () => {
-    if (!value.trim()) return;
+  const submit = async () => {
+    if (!prompt.trim()) return;
 
+    console.log('submit prompt...',prompt)
     // setLoading(true);
 
     const res = await fetch("/api/ai/analyze", {
@@ -47,11 +48,12 @@ export default function UploadPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         source: "prompt",
-        data: value,
+        data: prompt,
       }),
     });
 
     const data = await res.json();
+    console.log('res data..', data)
 
     // setLoading(false);
 
@@ -101,7 +103,7 @@ export default function UploadPage() {
           <PromptBox
             value={prompt}
             setValue={setPrompt}
-            onSubmit={(text) => console.log(text)} />
+            onSubmit={submit} />
 
           :
           <DynamicForm
