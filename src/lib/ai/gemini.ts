@@ -2,19 +2,22 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const apiKey = process.env.GEMINI_API_KEY;
 
+
+
 if (!apiKey) {
-  throw new Error("GEMINI_API_KEY missing");
+    throw new Error("GEMINI_API_KEY missing");
 }
 
 const genAI = new GoogleGenerativeAI(apiKey);
 
 export async function analyzeWithGemini(input: string) {
-  try {
-    const model = genAI.getGenerativeModel({
-      model: "models/gemini-1.5-flash",
-    });
+    console.log("apiKey...", apiKey)
+    try {
+        const model = genAI.getGenerativeModel({
+            model: "models/gemini-1.0-pro"
+        });
 
-    const prompt = `
+        const prompt = `
 You are an expert government form assistant.
 
 Return ONLY valid JSON in this format:
@@ -28,13 +31,13 @@ Input:
 ${input}
 `;
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
+        const result = await model.generateContent(prompt);
+        const text = result.response.text();
 
-    return JSON.parse(text);
+        return JSON.parse(text);
 
-  } catch (e) {
-    console.error("Gemini error:", e);
-    throw e; // 👈 IMPORTANT (don’t swallow error)
-  }
+    } catch (e) {
+        console.error("Gemini error:", e);
+        throw e; 
+    }
 }

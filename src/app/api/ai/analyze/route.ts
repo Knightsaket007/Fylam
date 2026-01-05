@@ -52,8 +52,9 @@ export async function POST(req: NextRequest) {
       {
         success: false,
         message: "AI could not process the document",
+        debug: String(err),
       },
-      { status: 422 }
+      { status: 500 }
     );
   }
 }
