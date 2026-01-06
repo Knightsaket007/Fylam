@@ -6,12 +6,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { source, data } = body;
 
-    if (!source || !data) {
-      return NextResponse.json(
-        { success: false, message: "Invalid payload" },
-        { status: 400 }
-      );
-    }
+   
 
     let input = "";
 
