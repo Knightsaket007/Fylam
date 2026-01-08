@@ -1,43 +1,58 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.GEMINI_API_KEY;
-
-
-
-if (!apiKey) {
-    throw new Error("GEMINI_API_KEY missing");
-}
-
-const genAI = new GoogleGenerativeAI(apiKey);
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export async function analyzeWithGemini(input: string) {
-    console.log("apiKey...", apiKey)
+  const model = "gemini-2.5-flash";
+  const maxRetries = 1;
+  let attempt = 0;
+
+  while (attempt <= maxRetries) {
+    attempt++;
     try {
-        const model = genAI.getGenerativeModel({
-            model: "models/gemini-1.0-pro"
-        });
-
-        const prompt = `
+      const res = await ai.models.generateContent({
+        model,
+        contents: `
 You are an expert government form assistant.
-
-Return ONLY valid JSON in this format:
-{
-  "purpose": string,
-  "fields": { "fieldName": "value or null" }[],
-  "missing": string[]
-}
-
+Rules:
+- ONLY valid JSON
+- No markdown
+- No explanation
+- No guessing
+Format:
+{"purpose": string,"fields":[{"name": string,"value": string | null}],"missing": string[]}
 Input:
-${input}
-`;
+${input.slice(0, 1500)}
+        `,
+      });
 
-        const result = await model.generateContent(prompt);
-        const text = result.response.text();
+      const candidates = res?.candidates;
+      let text: string | undefined;
 
-        return JSON.parse(text);
+      if (candidates && candidates.length > 0) {
+        
+        const first = candidates[0];
+        if (Array.isArray(first.content)) {
+          text = first.content.map(p => (p.parts ? p.parts.map((pp: { text: string }) => pp.text).join("\n") : "")).join("\n");
+        }
+      }
 
-    } catch (e) {
-        console.error("Gemini error:", e);
-        throw e; 
+      text ??= res?.text;
+
+      if (!text) {
+        if (attempt > maxRetries) throw new Error(JSON.stringify(res));
+        continue;
+      }
+
+      try {
+        return JSON.parse(text.trim());
+      } catch {
+        if (attempt > maxRetries) throw new Error("Failed to parse JSON: " + text);
+        continue;
+      }
+    } catch (err) {
+      if (attempt > maxRetries) throw err;
     }
+  }
+  throw new Error("Gemini failed after retries");
 }
