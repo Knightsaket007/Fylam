@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { analyzeWithGemini } from "@/lib/ai/gemini";
+import { analyzeWithGemini } from "@/lib/ai/geminiText";
 
 export async function POST(req: NextRequest) {
   try {
