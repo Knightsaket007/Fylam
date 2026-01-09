@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-export async function analyzeWithGemini(input: string) {
+export async function analyzePromptWithGemini(input: string) {
   const model = "gemini-2.5-flash";
   const maxRetries = 1;
   let attempt = 0;

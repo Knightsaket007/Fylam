@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { analyzeWithGemini } from "@/lib/ai/geminiText";
+import { analyzePromptWithGemini } from "@/lib/ai/geminiText";
+import { analyzeFileWithGemini } from "@/lib/ai/geminiFile";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { source, data } = body;
+    const { source, data } = await req.json();
 
     if (!source || !data) {
       return NextResponse.json(
@@ -15,18 +15,9 @@ export async function POST(req: NextRequest) {
 
     let input = "";
 
-    if (!input.trim()) {
-      return NextResponse.json(
-        { success: false, message: "Empty input" },
-        { status: 422 }
-      );
-    }
-
-    let result;
-
     switch (source) {
       case "pdf":
-        input = data.text;
+        input = data.text ?? "";
         break;
 
       case "manual":
@@ -37,22 +28,31 @@ export async function POST(req: NextRequest) {
 
       case "prompt":
         input = data;
-        result = await analyzeWithGemini(input);
         break;
+
+      default:
+        return NextResponse.json(
+          { success: false, message: "Invalid source type" },
+          { status: 400 }
+        );
     }
 
+    if (!input.trim()) {
+      return NextResponse.json(
+        { success: false, message: "Empty input" },
+        { status: 422 }
+      );
+    }
 
+    const result =
+      source === "prompt"
+        ? await analyzePromptWithGemini(input)
+        : await analyzeFileWithGemini(input);
 
-    // const result = await analyzeWithGemini(input);
-
-    return NextResponse.json({
-      success: true,
-      result,
-    });
+    return NextResponse.json({ success: true, result });
 
   } catch (err) {
     console.error("AI ERROR:", err);
-
     return NextResponse.json(
       {
         success: false,
