@@ -15,6 +15,15 @@ export async function POST(req: NextRequest) {
 
     let input = "";
 
+    if (!input.trim()) {
+      return NextResponse.json(
+        { success: false, message: "Empty input" },
+        { status: 422 }
+      );
+    }
+
+    let result;
+
     switch (source) {
       case "pdf":
         input = data.text;
@@ -28,17 +37,13 @@ export async function POST(req: NextRequest) {
 
       case "prompt":
         input = data;
+        result = await analyzeWithGemini(input);
         break;
     }
 
-    if (!input.trim()) {
-      return NextResponse.json(
-        { success: false, message: "Empty input" },
-        { status: 422 }
-      );
-    }
 
-    const result = await analyzeWithGemini(input);
+
+    // const result = await analyzeWithGemini(input);
 
     return NextResponse.json({
       success: true,
