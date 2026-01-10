@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { analyzeWithGemini } from "@/lib/ai/geminiAnalysis";
+import { extractTextFromPDF } from "@/lib/pdfParser/extractTextFromPDF";
+
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,6 +20,7 @@ export async function POST(req: NextRequest) {
     switch (source) {
       case "pdf":
         input = data.text;
+        extractTextFromPDF(input)
         break;
 
       case "manual":
@@ -37,6 +40,7 @@ export async function POST(req: NextRequest) {
         { status: 422 }
       );
     }
+
 
     const result = await analyzeWithGemini(input);
 
