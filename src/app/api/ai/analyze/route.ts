@@ -19,8 +19,12 @@ export async function POST(req: NextRequest) {
 
     switch (source) {
       case "pdf":
-        input = data.text;
-        extractTextFromPDF(input)
+        const buffer =
+          typeof data === "string"
+            ? Buffer.from(data, "base64")
+            : Buffer.from(data);
+
+        input = await extractTextFromPDF(buffer);
         break;
 
       case "manual":
