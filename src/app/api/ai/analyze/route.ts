@@ -45,7 +45,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-
     const result = await analyzeWithGemini(input);
 
     return NextResponse.json({
