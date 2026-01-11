@@ -21,8 +21,8 @@ export default function UploadPage() {
   const [mode, setMode] = useState<"upload" | "prompt" | "manual">("upload");
   const [fields, setFields] = useState<Field[]>([initalField]);
   const [prompt, setPrompt] = useState<string>("");
+  const [selectedPDF, setSelectedPDF] = useState<File | null>(null);
 
-  const [value, setValue] = useState("");
 
   const showCustAlert = () => {
     console.log('inside alert')
@@ -37,35 +37,74 @@ export default function UploadPage() {
   }
 
 
-  const submit = async () => {
-    if (!prompt.trim()) return;
+  // const submit = async () => {
+  //   if (!prompt.trim()) return;
 
-    console.log('submit prompt...',prompt)
-    // setLoading(true);
+  //   console.log('submit prompt...', prompt)
+  //   // setLoading(true);
+
+  //   const res = await fetch("/api/ai/analyze", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       source: "prompt",
+  //       data: prompt,
+  //     }),
+  //   });
+
+  //   const data = await res.json();
+  //   console.log('res data..', data)
+
+  //   // setLoading(false);
+
+  //   if (!res.ok || !data.success) {
+  //     // toast.error(data.message || "AI failed");
+  //     return;
+  //   }
+
+  //   console.log("AI result:", data.result);
+  //   // toast.success("Analysis complete");
+  // };
+
+
+  const submit = async () => {
+    let payload;
+
+    if (mode === "prompt") {
+      if (!prompt.trim()) return;
+      payload = { source: "prompt", data: prompt };
+    }
+
+    if (mode === "upload") {
+      if (!selectedPDF) return;
+
+      const form = new FormData();
+      form.append("file", selectedPDF);
+
+      const res = await fetch("/api/ai/analyze-pdf", {
+        method: "POST",
+        body: form,
+      });
+
+      const data = await res.json();
+      console.log("PDF AI result:", data);
+      return;
+    }
+
+    if (mode === "manual") {
+      // manual ka payload baad me
+      return;
+    }
 
     const res = await fetch("/api/ai/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        source: "prompt",
-        data: prompt,
-      }),
+      body: JSON.stringify(payload),
     });
 
     const data = await res.json();
-    console.log('res data..', data)
-
-    // setLoading(false);
-
-    if (!res.ok || !data.success) {
-      // toast.error(data.message || "AI failed");
-      return;
-    }
-
-    console.log("AI result:", data.result);
-    // toast.success("Analysis complete");
+    console.log("AI result:", data);
   };
-
 
 
   return (
@@ -97,8 +136,13 @@ export default function UploadPage() {
       </div>
 
       {mode === "upload"
-        ? <UploadBox />
-        : (mode === "prompt") ?
+        ? <UploadBox
+          file={selectedPDF}
+          setFile={setSelectedPDF}
+          uploadPdf={submit}
+        />
+        :
+        (mode === "prompt") ?
 
           <PromptBox
             value={prompt}
