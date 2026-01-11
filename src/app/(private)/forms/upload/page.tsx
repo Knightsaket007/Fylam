@@ -37,74 +37,37 @@ export default function UploadPage() {
   }
 
 
-  // const submit = async () => {
-  //   if (!prompt.trim()) return;
-
-  //   console.log('submit prompt...', prompt)
-  //   // setLoading(true);
-
-  //   const res = await fetch("/api/ai/analyze", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       source: "prompt",
-  //       data: prompt,
-  //     }),
-  //   });
-
-  //   const data = await res.json();
-  //   console.log('res data..', data)
-
-  //   // setLoading(false);
-
-  //   if (!res.ok || !data.success) {
-  //     // toast.error(data.message || "AI failed");
-  //     return;
-  //   }
-
-  //   console.log("AI result:", data.result);
-  //   // toast.success("Analysis complete");
-  // };
-
-
   const submit = async () => {
-    let payload;
+    if (!prompt.trim()) return;
 
-    if (mode === "prompt") {
-      if (!prompt.trim()) return;
-      payload = { source: "prompt", data: prompt };
-    }
-
-    if (mode === "upload") {
-      if (!selectedPDF) return;
-
-      const form = new FormData();
-      form.append("file", selectedPDF);
-
-      const res = await fetch("/api/ai/analyze-pdf", {
-        method: "POST",
-        body: form,
-      });
-
-      const data = await res.json();
-      console.log("PDF AI result:", data);
-      return;
-    }
-
-    if (mode === "manual") {
-      // manual ka payload baad me
-      return;
-    }
+    console.log('submit prompt...', prompt)
+    // setLoading(true);
 
     const res = await fetch("/api/ai/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        source: "prompt",
+        data: prompt,
+      }),
     });
 
     const data = await res.json();
-    console.log("AI result:", data);
+    console.log('res data..', data)
+
+    // setLoading(false);
+
+    if (!res.ok || !data.success) {
+      // toast.error(data.message || "AI failed");
+      return;
+    }
+
+    console.log("AI result:", data.result);
+    // toast.success("Analysis complete");
   };
+
+
+
 
 
   return (
