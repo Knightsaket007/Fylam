@@ -23,21 +23,22 @@ export default function UploadBox({ file, setFile, uploadPdf }: Props) {
     setFile(f);
   };
 
-  // const upload = async () => {
-  //   if (!file) return;
-  //   setLoading(true);
+  const upload = async () => {
+    uploadPdf()
+    if (!file) return;
+    setLoading(true);
 
-  //   const form = new FormData();
-  //   form.append("file", file);
+    const form = new FormData();
+    form.append("file", file);
 
-  //   const res = await fetch("/api/pdf-detect", {
-  //     method: "POST",
-  //     body: form,
-  //   });
+    const res = await fetch("/api/pdf-detect", {
+      method: "POST",
+      body: form,
+    });
 
-  //   if (!res.ok) setError("Upload failed");
-  //   setLoading(false);
-  // };
+    if (!res.ok) setError("Upload failed");
+    setLoading(false);
+  };
 
   return (
     <div className="rounded-xl border border-gray-300 bg-white p-8 shadow-sm">
@@ -71,7 +72,7 @@ export default function UploadBox({ file, setFile, uploadPdf }: Props) {
       {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
 
       <Button
-        onClick={uploadPdf}
+        onClick={upload}
         disabled={!file || loading}
         className="mt-6 w-full"
       >
