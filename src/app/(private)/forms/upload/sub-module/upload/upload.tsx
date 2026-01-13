@@ -24,20 +24,24 @@ export default function UploadBox({ file, setFile, uploadPdf }: Props) {
   };
 
   const upload = async () => {
-    uploadPdf()
+    // uploadPdf()
+    console.log('file...', file)
     if (!file) return;
     setLoading(true);
 
-    const form = new FormData();
-    form.append("file", file);
+    // const form = new FormData();
+    // form.append("file", file);
 
-    const res = await fetch("/api/pdf-detect", {
-      method: "POST",
-      body: form,
-    });
+    setFile(file as File)
 
-    if (!res.ok) setError("Upload failed");
-    setLoading(false);
+
+    // const res = await fetch("/api/pdf-detect", {
+    //   method: "POST",
+    //   body: form,
+    // });
+
+    // if (!res.ok) setError("Upload failed");
+    // setLoading(false);
   };
 
   return (
