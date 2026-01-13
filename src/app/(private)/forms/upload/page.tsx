@@ -16,6 +16,13 @@ const initalField = {
   labelerror: false,
 }
 
+type ModeValueMap = {
+  upload: File | null;
+  prompt: string;
+  manual: string;
+};
+
+
 export default function UploadPage() {
 
   const [mode, setMode] = useState<"upload" | "prompt" | "manual">("upload");
@@ -36,6 +43,13 @@ export default function UploadPage() {
     })
   }
 
+  type ModeValueMap = {
+    upload: File | null;
+    prompt: string;
+    manual: string;
+  };
+
+
 
   const submit = async () => {
     if (!prompt.trim()) return;
@@ -43,6 +57,7 @@ export default function UploadPage() {
     console.log('submit prompt...', prompt)
     // setLoading(true);
 
+    const currSource = mode ==
     const res = await fetch("/api/ai/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
