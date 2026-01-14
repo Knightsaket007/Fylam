@@ -7,6 +7,7 @@ import { useState } from "react";
 import DynamicForm from "./sub-module/fields/DynamicForm";
 import showAlert from "@/components/shared/Alert";
 import PromptBox from "./sub-module/promptBox/PromptBox";
+import { extractPdfText } from "@/lib/pdf/extractTextFromPDF";
 
 
 const initalField = {
@@ -50,81 +51,98 @@ export default function UploadPage() {
 
 
 
-  const submit = async () => {
-  setLoading(true);
-
-  const value = modeObj[mode];
-  if (!value) {
-    setLoading(false);
-    return;
-  }
-
-  let res: Response;
-
-  if (mode === "upload") {
-    const form = new FormData();
-    form.append("source", "upload");
-    form.append("file", value as File);
-
-    res = await fetch("/api/ai/analyze", {
-      method: "POST",
-      body: form,
-    });
-  } else {
-    res = await fetch("/api/ai/analyze", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        source: mode,
-        data: value,
-      }),
-    });
-  }
-
-  const data = await res.json();
-  setLoading(false);
-
-  if (!res.ok || !data.success) return;
-
-  console.log("AI result:", data.result);
-};
-
-
-
   // const submit = async () => {
   //   setLoading(true);
-  //   if (!modeObj[mode]) {
+
+  //   const value = modeObj[mode];
+  //   if (!value) {
   //     setLoading(false);
   //     return;
   //   }
 
-  //   console.log('submit prompt...', prompt)
-  //   console.log('modeObj...', modeObj[mode])
-  //   // return;
+  //   let res: Response;
 
-  //   // const currSource = mode ==
-  //   const res = await fetch("/api/ai/analyze", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       source: mode,
-  //       data: modeObj[mode],
-  //     }),
-  //   });
+  //   if (mode === "upload") {
+  //     const form = new FormData();
+  //     form.append("source", "upload");
+  //     form.append("file", value as File);
 
-  //   const data = await res.json();
-  //   console.log('res data..', data)
-
-  //   // setLoading(false);
-
-  //   if (!res.ok || !data.success) {
-  //     // toast.error(data.message || "AI failed");
-  //     return;
+  //     res = await fetch("/api/ai/analyze", {
+  //       method: "POST",
+  //       body: form,
+  //     });
+  //   } else {
+  //     res = await fetch("/api/ai/analyze", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         source: mode,
+  //         data: value,
+  //       }),
+  //     });
   //   }
 
+  //   const data = await res.json();
+  //   setLoading(false);
+
+  //   if (!res.ok || !data.success) return;
+
   //   console.log("AI result:", data.result);
-  //   // toast.success("Analysis complete");
   // };
+
+
+  const submit = async () => {
+    setLoading(true);
+
+    const value = modeObj[mode];
+    if (!value) {
+      setLoading(false);
+      return;
+    }
+
+    let payload: { source: string; data: string | object };
+
+    try {
+      if (mode === "upload") {
+        const file = value as File;
+
+        // 🔥 CLIENT SIDE PDF → TEXT
+        const extractedText = await extractPdfText(file);
+
+        if (!extractedText.trim()) {
+          setLoading(false);
+          return;
+        }
+
+        payload = {
+          source: "prompt", // backend ko farak nahi padega
+          data: extractedText,
+        };
+      } else {
+        payload = {
+          source: mode,
+          data: value,
+        };
+      }
+
+      const res = await fetch("/api/ai/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      setLoading(false);
+
+      if (!res.ok || !data.success) return;
+
+      console.log("AI result:", data.result);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
+  };
+
 
 
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { analyzeWithGemini } from "@/lib/ai/geminiAnalysis";
-import { extractTextFromPDF } from "@/lib/pdfParser/extractTextFromPDF";
+// import { extractTextFromPDF } from "@/lib/pdfParser/extractTextFromPDF";
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       }
 
       const buffer = Buffer.from(await file.arrayBuffer());
-      input = await extractTextFromPDF(buffer);
+      // input = await extractTextFromPDF(buffer);
     }
 
     // ===== PROMPT / MANUAL (JSON) =====
