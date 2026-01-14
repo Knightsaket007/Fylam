@@ -1,14 +1,17 @@
 "use client";
 
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf";
+import workerSrc from "pdfjs-dist/legacy/build/pdf.worker.min.js";
+import type { TextItem } from "pdfjs-dist/types/src/display/api";
 
-// 👇 worker
-GlobalWorkerOptions.workerSrc =
-  "https://unpkg.com/pdfjs-dist@4.2.67/legacy/build/pdf.worker.min.js";
+GlobalWorkerOptions.workerSrc = workerSrc;
+
+function isTextItem(item: unknown): item is TextItem {
+  return typeof item === "object" && item !== null && "str" in item;
+}
 
 export async function extractPdfText(file: File): Promise<string> {
   const buffer = await file.arrayBuffer();
-
   const pdf = await getDocument({ data: buffer }).promise;
 
   let text = "";
@@ -19,9 +22,7 @@ export async function extractPdfText(file: File): Promise<string> {
 
     text +=
       content.items
-        .map((item) =>
-          "str" in item ? item.str : ""
-        )
+        .map((item) => (isTextItem(item) ? item.str : ""))
         .join(" ") + "\n";
   }
 
