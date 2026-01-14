@@ -1,11 +1,14 @@
-export async function extractTextFromPDF(
-  buffer: Buffer
-): Promise<string> {
-  const pdf = (await import("pdf-parse")).default;
+import type { Buffer } from "buffer";
 
-  const data = await pdf(buffer, {
-    max: 5,
+export async function extractTextFromPDF(
+  buffer: Buffer,
+  maxPages = 5
+): Promise<string> {
+  const pdfParse = (await import("pdf-parse")).default;
+
+  const data = await pdfParse(buffer, {
+    max: maxPages,
   });
 
-  return data.text || "";
+  return data.text?.trim() || "";
 }

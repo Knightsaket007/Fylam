@@ -2,43 +2,54 @@ import { NextRequest, NextResponse } from "next/server";
 import { analyzeWithGemini } from "@/lib/ai/geminiAnalysis";
 import { extractTextFromPDF } from "@/lib/pdfParser/extractTextFromPDF";
 
-
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { source, data } = body;
-
-    if (!source || !data) {
-      return NextResponse.json(
-        { success: false, message: "Invalid payload" },
-        { status: 400 }
-      );
-    }
-
+    let source: string | null = null;
     let input = "";
 
-    switch (source) {
-      case "pdf":
-        const buffer =
-          typeof data === "string"
-            ? Buffer.from(data, "base64")
-            : Buffer.from(data);
+    const contentType = req.headers.get("content-type") || "";
 
-        input = await extractTextFromPDF(buffer);
-        break;
+    // ===== UPLOAD (FormData) =====
+    if (contentType.includes("multipart/form-data")) {
+      const form = await req.formData();
+      source = form.get("source") as string;
+      const file = form.get("file");
 
-      case "manual":
-        input = Object.entries(data)
-          .map(([k, v]) => `${k}: ${v}`)
-          .join("\n");
-        break;
+      if (source !== "upload" || !(file instanceof File)) {
+        return NextResponse.json(
+          { success: false, message: "Invalid upload payload" },
+          { status: 400 }
+        );
+      }
 
-      case "prompt":
-        input = data;
-        break;
+      const buffer = Buffer.from(await file.arrayBuffer());
+      input = await extractTextFromPDF(buffer);
     }
 
-    if (!input.trim()) {
+    // ===== PROMPT / MANUAL (JSON) =====
+    else {
+      const body = await req.json();
+      source = body?.source;
+
+      if (!source) {
+        return NextResponse.json(
+          { success: false, message: "Invalid payload" },
+          { status: 400 }
+        );
+      }
+
+      if (source === "prompt") {
+        input = body.data;
+      }
+
+      if (source === "manual") {
+        input = Object.entries(body.data || {})
+          .map(([k, v]) => `${k}: ${v}`)
+          .join("\n");
+      }
+    }
+
+    if (!input || !input.trim()) {
       return NextResponse.json(
         { success: false, message: "Empty input" },
         { status: 422 }
@@ -47,14 +58,9 @@ export async function POST(req: NextRequest) {
 
     const result = await analyzeWithGemini(input);
 
-    return NextResponse.json({
-      success: true,
-      result,
-    });
-
+    return NextResponse.json({ success: true, result });
   } catch (err) {
     console.error("AI ERROR:", err);
-
     return NextResponse.json(
       {
         success: false,

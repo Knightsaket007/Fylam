@@ -29,7 +29,7 @@ export default function UploadPage() {
   const [fields, setFields] = useState<Field[]>([initalField]);
   const [prompt, setPrompt] = useState<string>("");
   const [selectedPDF, setSelectedPDF] = useState<File | null>(null);
-
+  const [loading, setLoading] = useState<boolean>(false)
 
   const showCustAlert = () => {
     console.log('inside alert')
@@ -37,49 +37,94 @@ export default function UploadPage() {
       title: "hello world",
       description: "jnsns ksnfkfnkd afnask",
       onConfirm: () => {
-        // console.log('vajj')
       },
       isopen: true,
     })
   }
 
-  type ModeValueMap = {
-    upload: File | null;
-    prompt: string;
-    manual: string;
+  const modeObj: ModeValueMap = {
+    upload: selectedPDF,
+    prompt,
+    manual: prompt,
   };
 
 
 
   const submit = async () => {
-    if (!prompt.trim()) return;
+  setLoading(true);
 
-    console.log('submit prompt...', prompt)
-    // setLoading(true);
+  const value = modeObj[mode];
+  if (!value) {
+    setLoading(false);
+    return;
+  }
 
-    const currSource = mode ==
-    const res = await fetch("/api/ai/analyze", {
+  let res: Response;
+
+  if (mode === "upload") {
+    const form = new FormData();
+    form.append("source", "upload");
+    form.append("file", value as File);
+
+    res = await fetch("/api/ai/analyze", {
+      method: "POST",
+      body: form,
+    });
+  } else {
+    res = await fetch("/api/ai/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        source: "prompt",
-        data: prompt,
+        source: mode,
+        data: value,
       }),
     });
+  }
 
-    const data = await res.json();
-    console.log('res data..', data)
+  const data = await res.json();
+  setLoading(false);
 
-    // setLoading(false);
+  if (!res.ok || !data.success) return;
 
-    if (!res.ok || !data.success) {
-      // toast.error(data.message || "AI failed");
-      return;
-    }
+  console.log("AI result:", data.result);
+};
 
-    console.log("AI result:", data.result);
-    // toast.success("Analysis complete");
-  };
+
+
+  // const submit = async () => {
+  //   setLoading(true);
+  //   if (!modeObj[mode]) {
+  //     setLoading(false);
+  //     return;
+  //   }
+
+  //   console.log('submit prompt...', prompt)
+  //   console.log('modeObj...', modeObj[mode])
+  //   // return;
+
+  //   // const currSource = mode ==
+  //   const res = await fetch("/api/ai/analyze", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       source: mode,
+  //       data: modeObj[mode],
+  //     }),
+  //   });
+
+  //   const data = await res.json();
+  //   console.log('res data..', data)
+
+  //   // setLoading(false);
+
+  //   if (!res.ok || !data.success) {
+  //     // toast.error(data.message || "AI failed");
+  //     return;
+  //   }
+
+  //   console.log("AI result:", data.result);
+  //   // toast.success("Analysis complete");
+  // };
 
 
 
@@ -118,6 +163,7 @@ export default function UploadPage() {
           file={selectedPDF}
           setFile={setSelectedPDF}
           uploadPdf={submit}
+          loading={loading}
         />
         :
         (mode === "prompt") ?

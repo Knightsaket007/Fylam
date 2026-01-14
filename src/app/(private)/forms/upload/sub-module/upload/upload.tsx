@@ -7,11 +7,11 @@ type Props = {
   file: File | null;
   setFile: (file: File | null) => void;
   uploadPdf:()=>void;
+  loading:boolean
 };
 
-export default function UploadBox({ file, setFile, uploadPdf }: Props) {
+export default function UploadBox({ file, setFile, uploadPdf, loading }: Props) {
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleFile = (f?: File) => {
     if (!f) return;
@@ -27,12 +27,13 @@ export default function UploadBox({ file, setFile, uploadPdf }: Props) {
     // uploadPdf()
     console.log('file...', file)
     if (!file) return;
-    setLoading(true);
+    // setLoading(true);
 
     // const form = new FormData();
     // form.append("file", file);
 
     setFile(file as File)
+    uploadPdf()
 
 
     // const res = await fetch("/api/pdf-detect", {
