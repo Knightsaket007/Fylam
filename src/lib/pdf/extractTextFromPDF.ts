@@ -1,8 +1,12 @@
+import type { Buffer } from "buffer";
+import { PDFParse } from "pdf-parse";
 
-export async function extractTextFromPDF(buffer: Buffer) {
-  const mod = await import("pdf-parse");
-  const pdf = mod.default; 
+export async function extractTextFromPDF(buffer: Buffer): Promise<string> {
+  const parser = new PDFParse({ data: buffer });
 
-  const data = await pdf(buffer, { max: 3 });
-  return data.text;
+  const result = await parser.getText({ first: 5 });
+
+  await parser.destroy(); // cleanup
+
+  return result.text || "";
 }
