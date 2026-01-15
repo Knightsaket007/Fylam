@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   experimental: {
-    serverComponentsExternalPackages: ["pdf-parse"],
+    // serverComponentsExternalPackages: ["pdf-parse"],
+    serverExternalPackages: ["pdf-parse"],
   },
-  /* config options here */
 };
 
 export default nextConfig;
