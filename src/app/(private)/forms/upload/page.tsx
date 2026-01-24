@@ -116,7 +116,6 @@ const submit = async () => {
     }
      // --=-=-=--==-=-=- Other modEs =--=-=-=-///
     else {
-      console.log('value...', value)
       res = await fetch("/api/ai/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
