@@ -6,9 +6,13 @@ export async function POST(req: NextRequest) {
   try {
     const form = await req.formData();
 
+    console.log('prompt...', form)
+    return;
     const source = form.get("source");
     const file = form.get("file") as File | null;
     const prompt = form.get("data") as string | null;
+      
+    return;
 
     let input = "";
 
@@ -21,6 +25,7 @@ export async function POST(req: NextRequest) {
 
     if (source === "prompt" && prompt) {
       input = prompt;
+      
     }
 
     if (!input.trim()) {
