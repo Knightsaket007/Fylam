@@ -7,9 +7,10 @@ datasource db {
 }
 
 model File {
-  id        String   @id @default(uuid())
-  name      String
-  size      Int
+  id        String   @id @default(cuid())
+  input     String
   aiResult  Json
+  source    String
   createdAt DateTime @default(now())
 }
+

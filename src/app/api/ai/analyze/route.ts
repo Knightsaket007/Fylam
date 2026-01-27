@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { analyzeWithGemini } from "@/lib/ai/geminiAnalysis";
 import { extractTextFromPDF } from "@/lib/pdf/extractTextFromPDF";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,6 +30,15 @@ export async function POST(req: NextRequest) {
     }
 
     const result = await analyzeWithGemini(input);
+
+      await prisma.file.create({
+      data: {
+        input,
+        aiResult: result,
+        source: contentType.includes("multipart") ? "upload" : "prompt",
+      },
+    });
+
     return NextResponse.json({ success: true, result });
   } catch (err) {
     console.error(err);
