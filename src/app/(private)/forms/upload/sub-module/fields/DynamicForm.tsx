@@ -25,10 +25,10 @@ export default function DynamicForm({
 }: {
   // initialFields?: Field[];
   onSubmit: (data: Record<string, string>) => void;
-  setFields:React.Dispatch<React.SetStateAction<Field[]>>
-  fields:Field[]
+  setFields: React.Dispatch<React.SetStateAction<Field[]>>
+  fields: Field[]
 }) {
-  
+
   // const [fields, setFields] = useState<Field[]>(initialFields);
   const [fieldCount, setFieldCount] = useState(fields.length);
 
@@ -93,12 +93,22 @@ export default function DynamicForm({
   const submit = () => {
     const data: Record<string, string> = {};
     fields.forEach((f) => {
-      if (f.value) {
+      if (f.value && f.label) {
         console.log("fields...", f)
         data[f.label] = f.value;
       }
+      else if (!f.value) {
+        toast.warning("Value missing", {
+          description: "Please fill the value",
+        });
+      }
+      else if (!f.label) {
+        toast.warning("Label missing", {
+          description: "Please fill the Label field",
+        });
+      }
     });
-    console.log("data...", data)
+    // console.log("data...", data)
     onSubmit(data);
   };
 
