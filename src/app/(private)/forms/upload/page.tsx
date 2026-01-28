@@ -190,9 +190,10 @@ const submit = async () => {
 
           :
           <DynamicForm
-            onSubmit={(data) => {
-              console.log("Manual data:", data);
-            }}
+            // onSubmit={(data) => {
+            //   console.log("Manual data:", data);
+            // }}
+            onSubmit={submit}
             setFields={setFields}
             fields={fields}
           />
