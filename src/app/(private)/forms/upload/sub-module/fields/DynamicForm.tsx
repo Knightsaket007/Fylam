@@ -104,13 +104,13 @@ export default function DynamicForm({
 
 
   return (
-    <div className="space-y-4 rounded-xl border bg-white p-6 shadow-sm ">
+    <div className="space-y-4 rounded-xl border bg-white p-6 max-sm:p-3 shadow-sm ">
       <Toaster />
 
       {fields.map((f) => (
         <div key={f.id} className="flex gap-1 w-full md:items-center">
 
-          <button className="cursor-pointer relative group w-5 h-5" onClick={() => deleteField(f.id)}>
+          <button className="cursor-pointer relative group w-5 h-5 max-sm:!w-9" onClick={() => deleteField(f.id)}>
             <img
               src="https://img.icons8.com/carbon-copy/100/trash.png"
               alt="trash"
