@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { analyzeWithGemini } from "@/lib/ai/geminiAnalysis";
 import { extractTextFromPDF } from "@/lib/pdf/extractTextFromPDF";
-import prisma from "@/lib/prisma";
+import {prisma} from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   try {
