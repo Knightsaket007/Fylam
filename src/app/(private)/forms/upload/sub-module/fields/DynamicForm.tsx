@@ -92,25 +92,26 @@ export default function DynamicForm({
 
   const submit = () => {
     const data: Record<string, string> = {};
-    fields.forEach((f) => {
-      if (f.value && f.label) {
-        console.log("fields...", f)
-        data[f.label] = f.value;
+
+    const hasError = fields.some((f) => {
+      if (!f.value) {
+        toast.warning("Value missing", { description: "Please fill the value" });
+        return true;
       }
-      else if (!f.value) {
-        toast.warning("Value missing", {
-          description: "Please fill the value",
-        });
+      if (!f.label) {
+        toast.warning("Label missing", { description: "Please fill the Label field" });
+        return true;
       }
-      else if (!f.label) {
-        toast.warning("Label missing", {
-          description: "Please fill the Label field",
-        });
-      }
+      data[f.label] = f.value;
+      return false;
     });
-    // console.log("data...", data)
+
+    if (hasError) return;
+
+    console.log("data...", data);
     onSubmit(data);
   };
+
 
 
   return (
