@@ -165,12 +165,12 @@ const submit = async () => {
           Prompt
         </Button>
 
-        <Button
+        {/* <Button
           variant={mode === "manual" ? "default" : "outline"}
           onClick={() => setMode("manual")}
         >
           Enter Manually
-        </Button>
+        </Button> */}
       </div>
 
       {mode === "upload"
