@@ -181,22 +181,18 @@ const submit = async () => {
           loading={loading}
         />
         :
-        (mode === "prompt") ?
+        <PromptBox
+          value={prompt}
+          setValue={setPrompt}
+          onSubmit={submit} />
 
-          <PromptBox
-            value={prompt}
-            setValue={setPrompt}
-            onSubmit={submit} />
 
-          :
-          <DynamicForm
-            // onSubmit={(data) => {
-            //   console.log("Manual data:", data);
-            // }}
-            onSubmit={submit}
-            setFields={setFields}
-            fields={fields}
-          />
+          // :
+          // <DynamicForm
+          //   onSubmit={submit}
+          //   setFields={setFields}
+          //   fields={fields}
+          // />
 
       }
 
