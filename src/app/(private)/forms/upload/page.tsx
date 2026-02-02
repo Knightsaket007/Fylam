@@ -89,60 +89,57 @@ export default function UploadPage() {
   //   console.log("AI result:", data.result);
   // };
 
-const submit = async () => {
-  setLoading(true);
+  const submit = async () => {
+    setLoading(true);
 
-  const value = modeObj[mode];
-  if (!value) {
-    setLoading(false);
-    return;
-  }
-
-  try {
-    let res: Response;
-
-    // --=-=-=--==-=-=- PDF UPLOAD =--=-=-=-///
-    if (mode === "upload") {
-      const file = value as File;
-
-      const form = new FormData();
-      form.append("source", "upload");
-      form.append("file", file);
-
-      res = await fetch("/api/ai/analyze", {
-        method: "POST",
-        body: form,
-      });
-    }
-     // --=-=-=--==-=-=- Other modEs =--=-=-=-///
-    else {
-      res = await fetch("/api/ai/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          source: mode,
-          data: value,
-        }),
-      });
-    }
-
-    const data = await res.json();
-    setLoading(false);
-
-    if (!res.ok || !data.success) {
-      console.error(data?.message);
+    const value = modeObj[mode];
+    if (!value) {
+      setLoading(false);
       return;
     }
 
-    console.log("AI result:", data.result);
-  } catch (err) {
-    console.error(err);
-    setLoading(false);
-  }
-};
+    try {
+      let res: Response;
 
+      // --=-=-=--==-=-=- PDF UPLOAD =--=-=-=-///
+      if (mode === "upload") {
+        const file = value as File;
 
+        const form = new FormData();
+        form.append("source", "upload");
+        form.append("file", file);
 
+        res = await fetch("/api/ai/analyze", {
+          method: "POST",
+          body: form,
+        });
+      }
+      // --=-=-=--==-=-=- Other modEs =--=-=-=-///
+      else {
+        res = await fetch("/api/ai/analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            source: mode,
+            data: value,
+          }),
+        });
+      }
+
+      const data = await res.json();
+      setLoading(false);
+
+      if (!res.ok || !data.success) {
+        console.error(data?.message);
+        return;
+      }
+
+      console.log("AI result:", data.result);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
+  };
 
 
   return (
@@ -184,15 +181,17 @@ const submit = async () => {
         <PromptBox
           value={prompt}
           setValue={setPrompt}
-          onSubmit={submit} />
+          onSubmit={submit}
+          loading={loading}
+          />
 
 
-          // :
-          // <DynamicForm
-          //   onSubmit={submit}
-          //   setFields={setFields}
-          //   fields={fields}
-          // />
+        // :
+        // <DynamicForm
+        //   onSubmit={submit}
+        //   setFields={setFields}
+        //   fields={fields}
+        // />
 
       }
 

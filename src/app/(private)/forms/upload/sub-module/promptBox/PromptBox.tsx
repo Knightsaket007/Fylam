@@ -7,10 +7,12 @@ export default function PromptBox({
   value,
   setValue,
   onSubmit,
+  loading
 }: {
   value: string;
   setValue: (v: string) => void;
   onSubmit: (text: string) => void;
+  loading: boolean;
 }) {
   return (
     <div className="rounded-xl border bg-white p-6 shadow-sm space-y-4">
@@ -27,7 +29,8 @@ export default function PromptBox({
         onClick={() => onSubmit(value)}
         className="w-full"
       >
-        Generate
+        {loading ? "Analyzing..." : "Extract"}
+        
       </Button>
     </div>
   );

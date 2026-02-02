@@ -81,7 +81,7 @@ export default function UploadBox({ file, setFile, uploadPdf, loading }: Props) 
         disabled={!file || loading}
         className="mt-6 w-full"
       >
-        {loading ? "Processing..." : "Upload & Detect"}
+        {loading ? "Processing..." : "Upload & Extract"}
       </Button>
     </div>
   );
