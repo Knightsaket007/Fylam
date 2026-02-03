@@ -8,6 +8,8 @@ import DynamicForm from "./sub-module/fields/DynamicForm";
 import showAlert from "@/components/shared/Alert";
 import PromptBox from "./sub-module/promptBox/PromptBox";
 import { toast, Toaster } from "sonner";
+import { useRouter } from "next/navigation";
+
 
 
 const initalField = {
@@ -50,49 +52,10 @@ export default function UploadPage() {
   };
 
 
-
-  // const submit = async () => {
-  //   setLoading(true);
-
-  //   const value = modeObj[mode];
-  //   if (!value) {
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  //   let res: Response;
-
-  //   if (mode === "upload") {
-  //     const form = new FormData();
-  //     form.append("source", "upload");
-  //     form.append("file", value as File);
-
-  //     res = await fetch("/api/ai/analyze", {
-  //       method: "POST",
-  //       body: form,
-  //     });
-  //   } else {
-  //     res = await fetch("/api/ai/analyze", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         source: mode,
-  //         data: value,
-  //       }),
-  //     });
-  //   }
-
-  //   const data = await res.json();
-  //   setLoading(false);
-
-  //   if (!res.ok || !data.success) return;
-
-  //   console.log("AI result:", data.result);
-  // };
-
+  const router=useRouter()
   const submit = async () => {
-    setLoading(true);
 
+    setLoading(true);
     const value = modeObj[mode];
     if (!value) {
       setLoading(false);
@@ -135,16 +98,19 @@ export default function UploadPage() {
         return;
       }
 
-      if (data.result.fields) {
-       return toast.warning("Data not extracted", {
-          // description: "",
-        });
-      }
-
+      // if (data.result.fields) {
+      //   return toast.warning("Data not extracted", {
+      //   });
+      // }
       
-
       console.log("AI result res:", res);
       console.log("AI result data:", data);
+
+      const id=data.id || undefined;
+      router.push(`/result/${id}`);
+
+
+
     } catch (err) {
       console.error(err);
       setLoading(false);
@@ -207,7 +173,7 @@ export default function UploadPage() {
 
       }
 
- <Toaster />
+      <Toaster />
     </>
   )
 }
