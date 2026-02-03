@@ -7,6 +7,7 @@ import { useState } from "react";
 import DynamicForm from "./sub-module/fields/DynamicForm";
 import showAlert from "@/components/shared/Alert";
 import PromptBox from "./sub-module/promptBox/PromptBox";
+import { toast, Toaster } from "sonner";
 
 
 const initalField = {
@@ -134,12 +135,23 @@ export default function UploadPage() {
         return;
       }
 
-      console.log("AI result:", data.result);
+      if (data.result.fields) {
+       return toast.warning("Data not extracted", {
+          // description: "",
+        });
+      }
+
+      
+
+      console.log("AI result res:", res);
+      console.log("AI result data:", data);
     } catch (err) {
       console.error(err);
       setLoading(false);
     }
   };
+
+
 
 
   return (
@@ -183,7 +195,7 @@ export default function UploadPage() {
           setValue={setPrompt}
           onSubmit={submit}
           loading={loading}
-          />
+        />
 
 
         // :
@@ -195,6 +207,7 @@ export default function UploadPage() {
 
       }
 
+ <Toaster />
     </>
   )
 }
