@@ -1,9 +1,12 @@
-import React from 'react'
+"use client";
 
-const page = () => {
+import { DndContext } from "@dnd-kit/core";
+import StudioCanvas from "./StudioCanvas";
+
+export default function Page() {
   return (
-    <div>page</div>
-  )
+    <DndContext>
+      <StudioCanvas />
+    </DndContext>
+  );
 }
-
-export default page
