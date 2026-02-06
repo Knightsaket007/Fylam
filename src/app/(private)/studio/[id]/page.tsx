@@ -7,6 +7,6 @@ const StudioCanvas = dynamic(
   { ssr: false }
 );
 
-export default function StudioClient() {
+export default function Page() {
   return <StudioCanvas />;
 }
