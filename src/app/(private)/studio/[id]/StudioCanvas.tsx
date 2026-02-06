@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DndContext, UniqueIdentifier } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
 import { useDroppable } from "@dnd-kit/core";
 import DraggableField from "./DraggableField";
 
@@ -23,7 +23,7 @@ export default function StudioCanvas() {
     date: { x: 0, y: 80, text: "03 Feb 2026" },
   });
 
-  const handleDragEnd = (event: any) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, delta } = event;
 
     setFields((prev) => ({
