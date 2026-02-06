@@ -1,12 +1,12 @@
 "use client";
 
-import { DndContext } from "@dnd-kit/core";
-import StudioCanvas from "./StudioCanvas";
+import dynamic from "next/dynamic";
 
-export default function Page() {
-  return (
-    <DndContext>
-      <StudioCanvas />
-    </DndContext>
-  );
+const StudioCanvas = dynamic(
+  () => import("./StudioCanvas"),
+  { ssr: false }
+);
+
+export default function StudioClient() {
+  return <StudioCanvas />;
 }

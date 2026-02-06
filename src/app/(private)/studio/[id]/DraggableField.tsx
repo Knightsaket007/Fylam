@@ -19,7 +19,7 @@ export default function DraggableField({ id, text, x, y }: DraggableFieldProps) 
     left: x,
     top: y,
     cursor: "grab",
-    padding: "6px 10px",
+    padding: "2px 10px",
     background: "#fff",
     border: "1px solid #aaa",
     transform: transform
