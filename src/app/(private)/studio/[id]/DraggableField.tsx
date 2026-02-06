@@ -1,42 +1,34 @@
 "use client";
 
 import { useDraggable } from "@dnd-kit/core";
-import type { CSSProperties } from "react";
 
-export default function DraggableField({
-  id,
-  text,
-}: {
+type DraggableFieldProps = {
   id: string;
   text: string;
-}) {
-  const { attributes, listeners, setNodeRef, transform } =
-    useDraggable({ id });
+  x: number;
+  y: number;
+};
 
-  const style: CSSProperties = {
+export default function DraggableField({ id, text, x, y }: DraggableFieldProps) {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id,
+  });
+
+  const style = {
+    position: "absolute" as const,
+    left: x,
+    top: y,
+    cursor: "grab",
+    padding: "6px 10px",
+    background: "#fff",
+    border: "1px solid #aaa",
     transform: transform
-      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+      ? `translate(${transform.x}px, ${transform.y}px)`
       : undefined,
   };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
-      className="
-        absolute
-        px-2 py-1
-        bg-white
-        border border-gray-300
-        rounded-md
-        shadow-sm
-        cursor-grab active:cursor-grabbing
-        select-none
-        touch-none
-      "
-    >
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
       {text}
     </div>
   );
