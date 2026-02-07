@@ -36,6 +36,16 @@ export default function StudioCanvas() {
     }));
   };
 
+  const handleTextChange = (id: string, value: string) => {
+  setFields((prev) => ({
+    ...prev,
+    [id]: {
+      ...prev[id],
+      text: value,
+    },
+  }));
+};
+
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <div
@@ -55,6 +65,7 @@ export default function StudioCanvas() {
             text={field.text}
             x={field.x}
             y={field.y}
+            onChange={handleTextChange}
           />
         ))}
       </div>
