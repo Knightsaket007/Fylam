@@ -63,9 +63,9 @@ export default function DraggableField({
           onChange(id, e.currentTarget.textContent || "")
         }
         className="
-          min-w-[40px]
+          // min-w-[40px]
           px-2
-          py-[2px]
+          // py-[1px]
           bg-white
           border border-transparent
           hover:border-gray-300
