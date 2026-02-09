@@ -38,7 +38,7 @@ export default function DraggableField({
     >
       
       {/*=-=-=-=- DRAG HANDLE =-=-=-=-= */}
-      <button
+      {/* <button
         {...listeners}
         {...attributes}
         className="
@@ -53,7 +53,18 @@ export default function DraggableField({
         "
       >
         <GripVertical size={16} />
-      </button>
+      </button> */}
+
+         <div className="
+      absolute 
+      -top-3 
+      left-1/2 
+      -translate-x-1/2
+      opacity-0
+      group-hover:opacity-100
+   ">
+      ⠿
+   </div>
 
       {/* -==-=-=-Editable text-=-=-==- */}
       <div
