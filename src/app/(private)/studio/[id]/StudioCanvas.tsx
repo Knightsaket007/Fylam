@@ -52,8 +52,8 @@ export default function StudioCanvas() {
         ref={setNodeRef}
         style={{
           position: "relative",
-          width: "800px",
-          height: "1000px",
+          width: "794px",
+          height: "1123px",
           border: "1px solid #ddd",
           margin: "auto",
         }}

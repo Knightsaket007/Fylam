@@ -37,7 +37,7 @@ export default function DraggableField({
       className="group flex items-center gap-2"
     >
       
-      {/* ⭐ DRAG HANDLE */}
+      {/*=-=-=-=- DRAG HANDLE =-=-=-=-= */}
       <button
         {...listeners}
         {...attributes}
@@ -55,18 +55,19 @@ export default function DraggableField({
         <GripVertical size={16} />
       </button>
 
-      {/* ⭐ Editable text */}
+      {/* -==-=-=-Editable text-=-=-==- */}
       <div
-        contentEditable
+        // contentEditable
+        contentEditable="plaintext-only"
         suppressContentEditableWarning
         onBlur={(e) =>
           onChange(id, e.currentTarget.textContent || "")
         }
         className="
-          // min-w-[40px]
+          min-w-[40px]
           px-2
-          // py-[1px]
-          bg-white
+          py-[2px]
+          bg-transparent
           border border-transparent
           hover:border-gray-300
           focus:border-blue-400
