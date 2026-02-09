@@ -56,6 +56,7 @@ export default function StudioCanvas() {
           height: "1123px",
           border: "1px solid #ddd",
           margin: "auto",
+          overflow:"hidden"
         }}
       >
         {Object.entries(fields).map(([id, field]) => (
