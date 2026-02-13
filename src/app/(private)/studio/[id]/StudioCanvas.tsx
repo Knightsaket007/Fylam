@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
+import { restrictToParentElement } from "@dnd-kit/modifiers";
 import { useDroppable } from "@dnd-kit/core";
 import DraggableField from "./DraggableField";
 
@@ -23,55 +24,35 @@ export default function StudioCanvas() {
     date: { x: 0, y: 80, text: "03 Feb 2026" },
   });
 
-  // const handleDragEnd = (event: DragEndEvent) => {
-  //   const { active, delta } = event;
-
-  //   setFields((prev) => ({
-  //     ...prev,
-  //     [active.id]: {
-  //       ...prev[active.id],
-  //       x: prev[active.id].x + delta.x,
-  //       y: prev[active.id].y + delta.y,
-  //     },
-  //   }));
-  // };
-
   const handleDragEnd = (event: DragEndEvent) => {
-  const { active, delta } = event;
+    const { active, delta } = event;
 
-  setFields((prev) => {
-    const field = prev[active.id as string];
-
-    let newX = field.x + delta.x;
-    let newY = field.y + delta.y;
-
-    newX = Math.max(0, Math.min(newX, CANVAS_WIDTH - 100));
-    newY = Math.max(0, Math.min(newY, CANVAS_HEIGHT - 40));
-
-    return {
+    setFields((prev) => ({
       ...prev,
       [active.id]: {
-        ...field,
-        x: newX,
-        y: newY,
+        ...prev[active.id],
+        x: prev[active.id].x + delta.x,
+        y: prev[active.id].y + delta.y,
       },
-    };
-  });
-};
+    }));
+  };
 
 
   const handleTextChange = (id: string, value: string) => {
-  setFields((prev) => ({
-    ...prev,
-    [id]: {
-      ...prev[id],
-      text: value,
-    },
-  }));
-};
+    setFields((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        text: value,
+      },
+    }));
+  };
 
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <DndContext 
+    onDragEnd={handleDragEnd}
+    modifiers={[restrictToParentElement]}
+    >
       <div
         ref={setNodeRef}
         style={{
@@ -80,7 +61,7 @@ export default function StudioCanvas() {
           height: "1123px",
           border: "1px solid #ddd",
           margin: "auto",
-          overflow:"hidden"
+          // overflow: "hidden"
         }}
       >
         {Object.entries(fields).map(([id, field]) => (
