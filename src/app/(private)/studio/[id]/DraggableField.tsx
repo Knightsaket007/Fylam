@@ -34,7 +34,7 @@ export default function DraggableField({
     <div
       ref={setNodeRef}
       style={style}
-      className="group flex items-center gap-2"
+      className="group flex items-center relative"
     >
       
       {/*=-=-=-=- DRAG HANDLE =-=-=-=-= */}
@@ -50,6 +50,7 @@ export default function DraggableField({
           rounded
           shadow-sm
           p-1
+          
         "
       >
         <GripVertical size={16} />
@@ -69,8 +70,8 @@ export default function DraggableField({
           py-[2px]
           bg-transparent
           border border-transparent
-          hover:border-gray-300
-          focus:border-blue-400
+          // hover:border-gray-300
+          // focus:border-blue-400
           outline-none
         "
       >
