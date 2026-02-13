@@ -30,35 +30,48 @@ export default function DraggableField({
     transform: CSS.Translate.toString(transform),
   };
 
+  // --==--==-=--= EDGE DETECTION -=---=///
+  const EDGE_PADDING = 20;
+  const isNearTop = y < EDGE_PADDING;
+  const isNearLeft = x < EDGE_PADDING;
+
+  // /======---= grip position logic =--==-=-=-//
+  let gripPosition = "-top-8 left-1/2 -translate-x-1/2";
+
+  if (isNearTop) {
+    gripPosition = "top-1/2 -translate-y-1/2 -right-8";
+  }
+
+  if (isNearTop && isNearLeft) {
+    gripPosition = "-bottom-8 left-0";
+  }
+
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="group flex items-center relative"
-    >
-      
-      {/*=-=-=-=- DRAG HANDLE =-=-=-=-= */}
+    <div ref={setNodeRef} style={style} className="absolute group">
+
+      {/* =-=-=-=-= DRAG HANDLE =-=-=-=-==*/}
       <button
         {...listeners}
         {...attributes}
-        className="
-          opacity-0
-          group-hover:opacity-100
+        className={`
+          absolute
+          ${gripPosition}
+          opacity-0 group-hover:opacity-100
           cursor-grab
           bg-white
           border
-          rounded
-          shadow-sm
+          rounded-md
+          shadow-md
           p-1
-          
-        "
+          z-50
+        `}
       >
         <GripVertical size={16} />
       </button>
 
-      {/* -==-=-=-Editable text-=-=-==- */}
+
+      {/* -=-=-=--=-=-= TEXT -==--==-*/}
       <div
-        // contentEditable
         contentEditable="plaintext-only"
         suppressContentEditableWarning
         onBlur={(e) =>
@@ -70,9 +83,8 @@ export default function DraggableField({
           py-[2px]
           bg-transparent
           border border-transparent
-          // hover:border-gray-300
-          // focus:border-blue-400
           outline-none
+          whitespace-pre
         "
       >
         {text}
