@@ -86,6 +86,7 @@ export default function DraggableField({
           outline-none
           whitespace-pre-wrap
 
+          overflow-auto
         resize-x
 overflow-hidden
 min-w-[50px]
