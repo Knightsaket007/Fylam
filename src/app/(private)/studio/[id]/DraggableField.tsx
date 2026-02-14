@@ -19,7 +19,7 @@ export default function DraggableField({
   y,
   onChange,
 }: DraggableFieldProps) {
-  
+
   const { attributes, listeners, setNodeRef, transform } =
     useDraggable({ id });
 
@@ -86,10 +86,10 @@ export default function DraggableField({
           outline-none
           whitespace-pre-wrap
 
-          resize: horizontal;
-overflow: hidden;
-min-width: 50px;
-max-width: 100%;
+        resize-x
+overflow-hidden
+min-w-[50px]
+max-w-full
         "
       >
         {text}
