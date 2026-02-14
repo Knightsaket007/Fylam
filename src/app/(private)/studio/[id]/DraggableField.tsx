@@ -84,7 +84,12 @@ export default function DraggableField({
           bg-transparent
           border border-transparent
           outline-none
-          whitespace-pre
+          whitespace-pre-wrap
+
+          resize: horizontal;
+overflow: hidden;
+min-width: 50px;
+max-width: 100%;
         "
       >
         {text}
