@@ -15,13 +15,14 @@ export default function StudioCanvas() {
     x: number;
     y: number;
     text: string;
+    width:number
   };
 
   type Fields = Record<UniqueIdentifier, Field>;
 
   const [fields, setFields] = useState<Fields>({
-    name: { x: 0, y: 0, text: "Saket Sourav" },
-    date: { x: 0, y: 80, text: "03 Feb 2026" },
+    name: { x: 0, y: 0, text: "Saket Sourav", width:150 },
+    date: { x: 0, y: 80, text: "03 Feb 2026", width: 150 },
   });
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -48,6 +49,18 @@ export default function StudioCanvas() {
     }));
   };
 
+
+  const handleResize = (id: string, width: number) => {
+  setFields(prev => ({
+    ...prev,
+    [id]: {
+      ...prev[id],
+      width,
+    },
+  }));
+};
+
+
   return (
     <DndContext 
     onDragEnd={handleDragEnd}
@@ -61,7 +74,9 @@ export default function StudioCanvas() {
           height: "1123px",
           border: "1px solid #ddd",
           margin: "auto",
-          // overflow: "hidden"
+          overflow: "hidden",
+          // maxWidth: "100%",
+          flexShrink: 0,
         }}
       >
         {Object.entries(fields).map(([id, field]) => (
@@ -71,7 +86,9 @@ export default function StudioCanvas() {
             text={field.text}
             x={field.x}
             y={field.y}
+            width={field.width}
             onChange={handleTextChange}
+            onResize={handleResize}
           />
         ))}
       </div>
