@@ -4,6 +4,7 @@ import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical } from "lucide-react";
 import { getGripPosition } from "@/utils/studio/edgeDetection";
+import { useLayoutEffect, useRef, useState } from "react";
 
 
 type DraggableFieldProps = {
@@ -37,27 +38,43 @@ export default function DraggableField({
     transform: CSS.Translate.toString(transform),
   };
 
-  // --==--==-=--= EDGE DETECTION -=---=///
-  const EDGE_PADDING = 20;
-  const CANVAS_WIDTH = 794;
-  const CANVAS_HEIGHT = 1123;
 
-  const isNearTop = y < EDGE_PADDING;
-  const isNearLeft = x < EDGE_PADDING;
-  const isNearRight = x > CANVAS_WIDTH - EDGE_PADDING - width;
-  const isNearBottom = y > CANVAS_HEIGHT - EDGE_PADDING - 40;
 
-  // /======---= grip position logic =--==-=-=-//
-  let gripPosition = "-top-8 left-1/2 -translate-x-1/2";
+  // --==--==-=--= Grip EDGE DETECTION -=---=///
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({
+    width: 100,
+    height: 40,
+  });
 
-  if (isNearTop) {
-    gripPosition = "top-1/2 -translate-y-1/2 -right-8";
-  }
+  useLayoutEffect(() => {
+    if (!fieldRef.current) return;
 
-  if (isNearTop && isNearLeft) {
-    gripPosition = "-bottom-8 left-0";
-  }
-  // /======---= grip position logic Endedd =--==-=-=-//
+    const observer = new ResizeObserver((entries) => {
+      const rect = entries[0].contentRect;
+
+      setSize({
+        width: rect.width,
+        height: rect.height,
+      });
+    });
+
+    observer.observe(fieldRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+
+  const gripPosition = getGripPosition({
+    x,
+    y,
+    fieldWidth: size.width,
+    fieldHeight: size.height,
+    canvasWidth: 794,
+    canvasHeight: 1123,
+  });
+
+  // /======---= grip EDGE DETECTION logic Endedd =--==-=-=-//
 
 
   // =--==---= Resize Function handler -=-=-=-=-///
@@ -85,7 +102,12 @@ export default function DraggableField({
 
 
   return (
-    <div ref={setNodeRef} style={style} className="absolute group">
+    <div ref={(node) => {
+      setNodeRef(node);
+      fieldRef.current = node;
+    }}
+      style={style}
+      className="absolute group">
 
       {/* =-=-=-=-= DRAG HANDLE =-=-=-=-==*/}
       <button
