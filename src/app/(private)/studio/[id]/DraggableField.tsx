@@ -174,11 +174,6 @@ export default function DraggableField({
         <div className="h-6 w-[3px] bg-gray-400 rounded-full" />
       </div>
 
-
-<div>
-  context call
-</div>
-
     </div>
   );
 }

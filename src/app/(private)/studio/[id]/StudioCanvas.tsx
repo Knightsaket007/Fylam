@@ -78,7 +78,6 @@ export default function StudioCanvas() {
           // maxWidth: "100%",
           flexShrink: 0,
           borderRadius:"10px",
-          backgroundColor:"blue"
         }}
       >
         {Object.entries(fields).map(([id, field]) => (
