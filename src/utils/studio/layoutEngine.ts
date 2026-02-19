@@ -1,13 +1,6 @@
-type Field = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  text: string;
-};
 
 export function applyVerticalPush(
-  fields: Record<string, Field>,
+  fields: Record<string, Field_Layout>,
   id: string,
   newHeight: number
 ) {
