@@ -103,7 +103,12 @@ export default function StudioCanvas() {
             onHeightChange={handleHeightChange}
           />
         ))}
+
+
+        
       </div>
     </DndContext>
+
+    
   );
 }
