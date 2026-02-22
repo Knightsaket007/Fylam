@@ -5,7 +5,6 @@ import { CSS } from "@dnd-kit/utilities";
 import { GripVertical } from "lucide-react";
 import { getGripPosition } from "@/utils/studio/edgeDetection";
 import { useLayoutEffect, useRef, useState } from "react";
-import { applyVerticalPush } from "@/utils/studio/layoutEngine";
 
 
 type DraggableFieldProps = {
@@ -16,6 +15,7 @@ type DraggableFieldProps = {
   onChange: (id: string, value: string) => void;
   width: number;
   onResize: (id: string, width: number) => void
+  onHeightChange: (id: string, height: number) => void;
 };
 
 export default function DraggableField({
@@ -26,6 +26,7 @@ export default function DraggableField({
   onChange,
   width,
   onResize,
+  onHeightChange
 
 }: DraggableFieldProps) {
 
@@ -58,6 +59,8 @@ export default function DraggableField({
         width: rect.width,
         height: rect.height,
       });
+
+      onHeightChange(id, rect.height);
     });
 
     observer.observe(fieldRef.current);
@@ -102,14 +105,6 @@ export default function DraggableField({
   };
 
 
-
-  const handleHeightChange = (id: string, newHeight: number) => {
-    // setFields((prev) =>
-    //   applyVerticalPush(prev, id, newHeight)
-    // );
-  };
-
-
   return (
     <div ref={(node) => {
       setNodeRef(node);
@@ -148,7 +143,7 @@ export default function DraggableField({
         }
         style={{ width }}
         className="
-           min-w-[40px]
+           min-w-10
            px-2
            py-1
            rounded-sm
