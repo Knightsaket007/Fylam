@@ -70,7 +70,7 @@ export default function StudioCanvas() {
   };
 
 
-  
+  const generateId = () => crypto.randomUUID();
 
   const addNewField = () => {
     const id = generateId();
