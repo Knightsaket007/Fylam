@@ -70,6 +70,22 @@ export default function StudioCanvas() {
   };
 
 
+  
+
+  const addNewField = () => {
+    const id = generateId();
+
+    setFields(prev => ({
+      ...prev,
+      [id]: {
+        x: 100,
+        y: 100,
+        width: 150,
+        height: 40,
+        text: "New Text",
+      }
+    }));
+  };
 
   return (
     <DndContext
@@ -104,9 +120,29 @@ export default function StudioCanvas() {
           />
         ))}
 
+
+        <button
+          onClick={addNewField}
+          className="
+    fixed
+    bottom-6
+    right-6
+    bg-black
+    text-white
+    px-4
+    py-2
+    rounded-full
+    shadow-lg
+    hover:scale-105
+    transition
+  "
+        >
+          + Add Text
+        </button>
+
       </div>
     </DndContext>
 
-    
+
   );
 }
