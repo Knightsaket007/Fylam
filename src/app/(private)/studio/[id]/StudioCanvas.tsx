@@ -104,8 +104,6 @@ export default function StudioCanvas() {
           />
         ))}
 
-
-        
       </div>
     </DndContext>
 
