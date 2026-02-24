@@ -6,6 +6,7 @@ import { restrictToParentElement } from "@dnd-kit/modifiers";
 import { useDroppable } from "@dnd-kit/core";
 import DraggableField from "./DraggableField";
 import { applyVerticalPush } from "@/utils/studio/layoutEngine";
+import { Button } from "@/components/ui/button";
 
 export default function StudioCanvas() {
   const { setNodeRef } = useDroppable({
@@ -121,24 +122,18 @@ export default function StudioCanvas() {
         ))}
 
 
-        <button
+        <Button
           onClick={addNewField}
           className="
     fixed
     bottom-6
     right-6
-    bg-black
-    text-white
-    px-4
-    py-2
     rounded-full
     shadow-lg
-    hover:scale-105
-    transition
   "
         >
           + Add Text
-        </button>
+        </Button>
 
       </div>
     </DndContext>
