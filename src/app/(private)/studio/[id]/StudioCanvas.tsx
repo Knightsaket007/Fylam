@@ -8,6 +8,12 @@ import DraggableField from "./DraggableField";
 import { applyVerticalPush } from "@/utils/studio/layoutEngine";
 import { Button } from "@/components/ui/button";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 export default function StudioCanvas() {
   const { setNodeRef } = useDroppable({
     id: "canvas",
@@ -122,18 +128,29 @@ export default function StudioCanvas() {
         ))}
 
 
-        <Button
-          onClick={addNewField}
-          className="
-    fixed
-    bottom-6
-    right-6
-    rounded-full
-    shadow-lg
-  "
-        >
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+              <Button
+              onClick={addNewField}
+              className="
+               fixed
+               bottom-6
+               right-6
+               rounded-full
+               shadow-lg
+             "
+             >
           + Add Text
-        </Button>
+          </Button>
+          
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Add to library</p>
+          </TooltipContent>
+        </Tooltip>
+
+      
 
       </div>
     </DndContext>
