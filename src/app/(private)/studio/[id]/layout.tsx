@@ -1,4 +1,7 @@
-import Navbar from "@/comman/navbar";
+"use client"
+
+import Navbar from "@/comman/navbar"
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 export default function StudioLayout({
   children,
@@ -6,15 +9,14 @@ export default function StudioLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-    
-     <Navbar/>
+    <TooltipProvider>
+      <Navbar />
 
-    <section className="min-h-screen w-full bg-gray-50 px-4 py-10">
-      <div className="mx-auto ">
-        {children}
-      </div>
-    </section>
-    </>
-  );
+      <section className="min-h-screen w-full bg-gray-50 px-4 py-10">
+        <div className="mx-auto">
+          {children}
+        </div>
+      </section>
+    </TooltipProvider>
+  )
 }
