@@ -1,39 +1,52 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
+import { UniqueIdentifier } from "@dnd-kit/core";
 
-type FieldType = {
-    id: string;
-    text: string;
-    x: number;
-    y: number;
-    height: number;
-    fontSize: number;
-    color: string;
+type Field = {
+  x: number;
+  y: number;
+  text: string;
+  width: number;
+  height: number;
 };
 
+type Fields = Record<UniqueIdentifier, Field>;
+
 type StudioContextType = {
-    fields: FieldType[];
-    setFields: React.Dispatch<React.SetStateAction<FieldType[]>>;
-    activeId: string | null;
-    setActiveId: React.Dispatch<React.SetStateAction<string | null>>;
+  fields: Fields;
+  setFields: React.Dispatch<React.SetStateAction<Fields>>;
+  activeId: string | null;
+  setActiveId: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const StudioContext = createContext<StudioContextType | null>(null);
 
-export const StudioProvider = ({ children }: { children: React.ReactNode }) => {
-    const [fields, setFields] = useState<FieldType[]>([]);
-    const [activeId, setActiveId] = useState<string | null>(null);
+export const StudioProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [fields, setFields] = useState<Fields>({
+    10: { x: 0, y: 0, text: "Saket Sourav", width: 150, height: 40 },
+    date: { x: 0, y: 80, text: "03 Feb 2026", width: 150, height: 40 },
+  });
 
-    return (
-        <StudioContext.Provider value={{ fields, setFields, activeId, setActiveId }}>
-            {children}
-        </StudioContext.Provider>
-    );
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  return (
+    <StudioContext.Provider
+      value={{ fields, setFields, activeId, setActiveId }}
+    >
+      {children}
+    </StudioContext.Provider>
+  );
 };
 
 export const useStudio = () => {
-    const context = useContext(StudioContext);
-    if (!context) throw new Error("useStudio must be used inside StudioProvider");
-    return context;
+  const context = useContext(StudioContext);
+  if (!context) {
+    throw new Error("useStudio must be used inside StudioProvider");
+  }
+  return context;
 };
