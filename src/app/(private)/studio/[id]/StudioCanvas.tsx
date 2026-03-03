@@ -30,7 +30,7 @@ export default function StudioCanvas() {
   type Fields = Record<UniqueIdentifier, Field>;
 
   const [fields, setFields] = useState<Fields>({
-    name: { x: 0, y: 0, text: "Saket Sourav", width: 150, height: 40, },
+    10: { x: 0, y: 0, text: "Saket Sourav", width: 150, height: 40, },
     date: { x: 0, y: 80, text: "03 Feb 2026", width: 150, height: 40, },
   });
 
@@ -146,7 +146,7 @@ export default function StudioCanvas() {
           
           </TooltipTrigger>
           <TooltipContent>
-            <p>Add to library</p>
+            <p>Add new text</p>
           </TooltipContent>
         </Tooltip>
 
