@@ -12,6 +12,8 @@ type DraggableFieldProps = {
   text: string;
   x: number;
   y: number;
+  isActive: boolean;
+  setActiveId: (id: string) => void;
   onChange: (id: string, value: string) => void;
   width: number;
   onResize: (id: string, width: number) => void
@@ -23,6 +25,8 @@ export default function DraggableField({
   text,
   x,
   y,
+  isActive,
+  setActiveId,
   onChange,
   width,
   onResize,
@@ -142,6 +146,10 @@ export default function DraggableField({
           onChange(id, e.currentTarget.textContent || "")
         }
         style={{ width }}
+        onClick={(e) => {
+          e.stopPropagation(); 
+          setActiveId(id);
+        }}
         className="
            min-w-10
            px-2
