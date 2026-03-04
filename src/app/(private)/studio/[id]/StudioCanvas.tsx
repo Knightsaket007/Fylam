@@ -123,6 +123,8 @@ export default function StudioCanvas() {
             text={field.text}
             x={field.x}
             y={field.y}
+            isActive={activeId === id}
+            setActiveId={setActiveId}
             width={field.width}
             onChange={handleTextChange}
             onResize={handleResize}
