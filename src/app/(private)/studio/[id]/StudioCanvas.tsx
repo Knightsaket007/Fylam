@@ -13,6 +13,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useStudio } from "./context/StudioContext";
 
 export default function StudioCanvas() {
   const { setNodeRef } = useDroppable({
@@ -29,10 +30,12 @@ export default function StudioCanvas() {
 
   type Fields = Record<UniqueIdentifier, Field>;
 
-  const [fields, setFields] = useState<Fields>({
-    10: { x: 0, y: 0, text: "Saket Sourav", width: 150, height: 40, },
-    date: { x: 0, y: 80, text: "03 Feb 2026", width: 150, height: 40, },
-  });
+  // const [fields, setFields] = useState<Fields>({
+  //   10: { x: 0, y: 0, text: "Saket Sourav", width: 150, height: 40, },
+  //   date: { x: 0, y: 80, text: "03 Feb 2026", width: 150, height: 40, },
+  // });
+
+  const { fields, setFields, activeId, setActiveId } = useStudio();
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, delta } = event;
