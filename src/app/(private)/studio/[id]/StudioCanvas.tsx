@@ -14,6 +14,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useStudio } from "./context/StudioContext";
+import { getLastFieldId } from "@/utils/studio/getLastField";
 
 export default function StudioCanvas() {
   const { setNodeRef } = useDroppable({
@@ -103,6 +104,11 @@ export default function StudioCanvas() {
       modifiers={[restrictToParentElement]}
     >
       <div
+        onClick={() => {
+          const id = getLastFieldId(fields);
+          if (id) setActiveId(id);
+        }}
+        
         ref={setNodeRef}
         style={{
           position: "relative",
@@ -136,7 +142,7 @@ export default function StudioCanvas() {
 
         <Tooltip>
           <TooltipTrigger asChild>
-              <Button
+            <Button
               onClick={addNewField}
               className="
                fixed
@@ -145,17 +151,17 @@ export default function StudioCanvas() {
                rounded-full
                shadow-lg
              "
-             >
-          + Add Text
-          </Button>
-          
+            >
+              + Add Text
+            </Button>
+
           </TooltipTrigger>
           <TooltipContent>
             <p>Add new text</p>
           </TooltipContent>
         </Tooltip>
 
-      
+
 
       </div>
     </DndContext>
