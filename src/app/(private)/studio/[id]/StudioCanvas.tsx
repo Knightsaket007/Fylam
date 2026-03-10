@@ -104,14 +104,6 @@ export default function StudioCanvas() {
       modifiers={[restrictToParentElement]}
     >
       <div
-        onClick={() => {
-          const {lastId, lastText} = getLastFieldId(fields);
-          if (lastId) setActiveId(lastId);
-
-          console.log("click and last field id", lastId)
-          console.log("click and last field id", lastText)
-        }}
-        
         ref={setNodeRef}
         style={{
           position: "relative",

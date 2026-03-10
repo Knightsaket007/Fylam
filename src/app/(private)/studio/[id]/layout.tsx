@@ -23,7 +23,6 @@ export const SubLayout = ({ children }: { children: React.ReactNode; }) => {
 
   const { fields, setActiveId } = useStudio();
 
-
   return (
 
     <TooltipProvider>
