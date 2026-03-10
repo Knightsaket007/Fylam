@@ -107,6 +107,8 @@ export default function StudioCanvas() {
         onClick={() => {
           const id = getLastFieldId(fields);
           if (id) setActiveId(id);
+
+          console.log("click and last field id", id)
         }}
         
         ref={setNodeRef}
