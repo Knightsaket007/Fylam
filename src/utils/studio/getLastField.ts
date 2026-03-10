@@ -1,11 +1,9 @@
-import { text } from "stream/consumers";
-
 export function getLastFieldId(
-  fields: Record<string, { y: number }>
-): string | null {
+  fields: Record<string, { y: number; text: string }>
+): { lastId: string | null; lastText: string | null } {
 
   let lastId: string | null = null;
-  let lastText: string | null;
+  let lastText: string | null = null;
   let maxY = -Infinity;
 
   for (const id in fields) {
@@ -14,9 +12,9 @@ export function getLastFieldId(
     if (field.y > maxY) {
       maxY = field.y;
       lastId = id;
-      lastText =  text;
+      lastText = field.text;
     }
   }
 
-  return {lastId, lastText};
+  return { lastId, lastText };
 }
