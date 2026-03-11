@@ -86,7 +86,6 @@ export default function StudioCanvas() {
   const addNewField = () => {
     const id = generateId();
 
-    const {maxX,  maxY} =getLastFieldId();
 
     setFields(prev => ({
       ...prev,

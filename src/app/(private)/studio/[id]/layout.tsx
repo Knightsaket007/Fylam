@@ -21,7 +21,7 @@ export default function StudioLayout({
 
 export const SubLayout = ({ children }: { children: React.ReactNode; }) => {
 
-  const { fields, setActiveId } = useStudio();
+  const { fields, setActiveId, nextTextPosition,  setNextTextPosition } = useStudio();
 
   return (
 
@@ -31,11 +31,11 @@ export const SubLayout = ({ children }: { children: React.ReactNode; }) => {
       <section className="min-h-screen w-full bg-gray-50 px-4 py-10"
 
         onClick={() => {
-          const { lastId, lastText } = getLastFieldId(fields);
-          if (lastId) setActiveId(lastId);
+          const value = getLastFieldId(fields);
+          // if (lastId) setActiveId(lastId);
 
-          console.log("click and last field id", lastId)
-          console.log("click and last field id", lastText)
+          console.log("click and last field id", value.maxY)
+          console.log("click and last field id", value.lastText)
         }}
       >
         <div className="mx-auto">
