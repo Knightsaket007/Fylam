@@ -18,6 +18,8 @@ type StudioContextType = {
   setFields: React.Dispatch<React.SetStateAction<Fields>>;
   activeId: string | null;
   setActiveId: React.Dispatch<React.SetStateAction<string | null>>;
+  nextTextPosition: {x:number, y:number} | null;
+  setNextTextPosition: React.Dispatch<React.SetStateAction< {x:number, y:number}| null>>;
 };
 
 const StudioContext = createContext<StudioContextType | null>(null);
@@ -33,10 +35,11 @@ export const StudioProvider = ({
   });
 
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [nextTextPosition, setNextTextPosition] = useState<{x:number| 0, y:number | 0} | null>({x:100, y:100});
 
   return (
     <StudioContext.Provider
-      value={{ fields, setFields, activeId, setActiveId }}
+      value={{ fields, setFields, activeId, setActiveId, nextTextPosition, setNextTextPosition}}
     >
       {children}
     </StudioContext.Provider>
