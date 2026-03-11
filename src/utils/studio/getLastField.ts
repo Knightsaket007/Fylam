@@ -1,6 +1,6 @@
 export function getLastFieldId(
   fields: Record<string, {x:number ;y: number; text: string }>
-): { lastId: string | null; lastText: string | null; maxX:number ; maxY: number} {
+): ActiveField {
 
   let lastId: string | null = null;
   let lastText: string | null = null;
