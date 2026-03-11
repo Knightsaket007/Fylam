@@ -17,7 +17,7 @@ type StudioContextType = {
   fields: Fields;
   setFields: React.Dispatch<React.SetStateAction<Fields>>;
   activeField: string | null;
-  setActiveField: React.Dispatch<React.SetStateAction<string | null>>;
+  setActiveField: React.Dispatch<React.SetStateAction<{ lastId: string | null; lastText: string | null; maxX:number ; maxY: number} | null>>;
 };
 
 const StudioContext = createContext<StudioContextType | null>(null);
@@ -32,7 +32,7 @@ export const StudioProvider = ({
     date: { x: 0, y: 80, text: "03 Feb 2026", width: 150, height: 40 },
   });
 
-  const [activeField, setActiveField] = useState<string | null>(null);
+  const [activeField, setActiveField] = useState<{ lastId: string | null; lastText: string | null; maxX:number ; maxY: number} | null>(null);
 
   return (
     <StudioContext.Provider
