@@ -9,6 +9,6 @@ type Field_Layout = {
 type ActiveField = {
   lastId: string | null;
   lastText: string | null;
-  maxX: number;
-  maxY: number
+  maxX: number | null;
+  maxY: number | null;
 }
