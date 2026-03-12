@@ -21,7 +21,7 @@ export default function StudioLayout({
 
 export const SubLayout = ({ children }: { children: React.ReactNode; }) => {
 
-  const { fields, setActiveId, nextTextPosition,  setNextTextPosition } = useStudio();
+  const { fields, activeField, setActiveField } = useStudio();
 
   return (
 
@@ -33,6 +33,7 @@ export const SubLayout = ({ children }: { children: React.ReactNode; }) => {
         onClick={() => {
           const value = getLastFieldId(fields);
           // if (lastId) setActiveId(lastId);
+          setActiveField(value)
 
           console.log("click and last field id", value.maxY)
           console.log("click and last field id", value.lastText)

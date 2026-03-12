@@ -36,7 +36,7 @@ export default function StudioCanvas() {
   //   date: { x: 0, y: 80, text: "03 Feb 2026", width: 150, height: 40, },
   // });
 
-  const { fields, setFields, activeId, setActiveId } = useStudio();
+  const { fields, setFields, activeField, setActiveId } = useStudio();
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, delta } = event;
@@ -125,7 +125,7 @@ export default function StudioCanvas() {
             text={field.text}
             x={field.x}
             y={field.y}
-            isActive={activeId === id}
+            isActive={activeField?.lastId === id}
             setActiveId={setActiveId}
             width={field.width}
             onChange={handleTextChange}
