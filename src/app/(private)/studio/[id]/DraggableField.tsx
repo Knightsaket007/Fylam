@@ -13,7 +13,7 @@ type DraggableFieldProps = {
   x: number;
   y: number;
   isActive: boolean;
-  setActiveId: (id: string) => void;
+  setActiveField: React.Dispatch<React.SetStateAction< ActiveField | null>>;
   onChange: (id: string, value: string) => void;
   width: number;
   onResize: (id: string, width: number) => void
@@ -26,7 +26,7 @@ export default function DraggableField({
   x,
   y,
   isActive,
-  setActiveId,
+  setActiveField,
   onChange,
   width,
   onResize,
@@ -148,7 +148,12 @@ export default function DraggableField({
         style={{ width }}
         onClick={(e) => {
           e.stopPropagation(); 
-          setActiveId(id);
+          setActiveField({
+             lastId: id ,
+             lastText: text,
+             maxX: x,
+             maxY: y 
+          });
         }}
         className="
            min-w-10
