@@ -154,6 +154,7 @@ export default function DraggableField({
              maxX: x,
              maxY: y 
           });
+          console.log("Active Field set to:", { id, text, x, y });
         }}
         className="
            min-w-10
