@@ -86,15 +86,12 @@ export default function StudioCanvas() {
   const addNewField = () => {
     const id = generateId();
 
-    const lastField = getLastFieldId(fields);
-
-    console.log("Adding new field. Last field info:", lastField);
 
     setFields(prev => ({
       ...prev,
       [id]: {
-        x: (lastField?.maxX ?? 0) ,
-        y: (lastField?.maxY ?? 0)+20,
+        x: (activeField?.maxX ?? 0) ,
+        y: (activeField?.maxY ?? 0)+20,
         width: 150,
         height: 40,
         text: "New Text",
