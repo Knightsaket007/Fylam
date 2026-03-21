@@ -5,6 +5,9 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { StudioProvider, useStudio } from "./context/StudioContext";
 import { getLastFieldId } from "@/utils/studio/getLastField";
 
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "./sidebar/AppSidebar"
+
 export default function StudioLayout({
   children,
 }: {
@@ -13,6 +16,14 @@ export default function StudioLayout({
 
   return (
     <StudioProvider>
+      <SidebarProvider>
+        <AppSidebar />
+        <main>
+          <SidebarTrigger />
+          {children}
+        </main>
+      </SidebarProvider>
+
       <SubLayout >{children}</SubLayout>
     </StudioProvider>
   )
