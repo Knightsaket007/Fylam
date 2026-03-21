@@ -16,11 +16,12 @@ export default function StudioLayout({
 
   return (
     <StudioProvider>
+
       <SidebarProvider>
         <AppSidebar />
         <main>
           <SidebarTrigger />
-          {children}
+          {/* {children} */}
         </main>
       </SidebarProvider>
 
