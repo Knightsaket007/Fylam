@@ -6,7 +6,7 @@ import { StudioProvider, useStudio } from "./context/StudioContext";
 import { getLastFieldId } from "@/utils/studio/getLastField";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "./sidebar/AppSidebar"
+import { AppSidebar } from "./sidebar/Sidebar"
 
 export default function StudioLayout({
   children,
@@ -15,18 +15,12 @@ export default function StudioLayout({
 }) {
 
   return (
-    <StudioProvider>
+    <>
 
-      <SidebarProvider>
-        <AppSidebar />
-        <main>
-          <SidebarTrigger />
-          {/* {children} */}
-        </main>
-      </SidebarProvider>
-
-      <SubLayout >{children}</SubLayout>
-    </StudioProvider>
+      <StudioProvider>
+        <SubLayout >{children}</SubLayout>
+      </StudioProvider>
+    </>
   )
 }
 
@@ -40,21 +34,30 @@ export const SubLayout = ({ children }: { children: React.ReactNode; }) => {
     <TooltipProvider>
       <Navbar />
 
-      <section className="min-h-screen w-full bg-gray-50 px-4 py-10"
+      <SidebarProvider>
+        <div className="flex w-full min-h-[calc(100vh-64px)]">
 
-        onClick={() => {
-          const value = getLastFieldId(fields);
-          // if (lastId) setActiveId(lastId);
-          setActiveField(value)
+          <AppSidebar />
 
-          console.log("click and last field id", value.maxY)
-          console.log("click and last field id", value.lastText)
-        }}
-      >
-        <div className="mx-auto">
-          {children}
+          <main className="flex-1">
+            <SidebarTrigger />
+
+            <section
+              className="min-h-screen w-full  px-4 py-10"
+              onClick={() => {
+                const value = getLastFieldId(fields);
+                setActiveField(value);
+              }}
+            >
+              <div className="mx-auto">
+                {children}
+              </div>
+            </section>
+
+          </main>
+
         </div>
-      </section>
+      </SidebarProvider>
     </TooltipProvider>
 
   )
