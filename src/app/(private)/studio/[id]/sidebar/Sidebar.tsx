@@ -18,8 +18,11 @@ export function AppSidebar() {
   return (
     <Sidebar side="right" className="relative">
 
-      <SidebarTrigger className="absolute top-2 -left-5"/>
-      
+      <div className="absolute top-2 -left-5 bg-gray-200 rounded-full">
+
+        <SidebarTrigger size="icon-lg" />
+      </div>
+
       {/* HEADER */}
       <SidebarHeader>
         <h2 className="text-lg font-semibold px-2">Studio</h2>
@@ -27,7 +30,7 @@ export function AppSidebar() {
 
       {/* CONTENT */}
       <SidebarContent>
-        
+
         <SidebarGroup>
           <SidebarMenu className="mt-6">
 
