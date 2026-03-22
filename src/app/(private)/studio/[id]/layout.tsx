@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { StudioProvider, useStudio } from "./context/StudioContext";
 import { getLastFieldId } from "@/utils/studio/getLastField";
 
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "./sidebar/Sidebar"
 
 export default function StudioLayout({
@@ -37,13 +37,10 @@ export const SubLayout = ({ children }: { children: React.ReactNode; }) => {
       <SidebarProvider>
         <div className="flex w-full min-h-[calc(100vh-64px)]">
 
-          <AppSidebar />
-
           <main className="flex-1">
-            <SidebarTrigger />
 
             <section
-              className="min-h-screen w-full  px-4 py-10"
+              className=""
               onClick={() => {
                 const value = getLastFieldId(fields);
                 setActiveField(value);
@@ -55,6 +52,8 @@ export const SubLayout = ({ children }: { children: React.ReactNode; }) => {
             </section>
 
           </main>
+
+           <AppSidebar />
 
         </div>
       </SidebarProvider>
