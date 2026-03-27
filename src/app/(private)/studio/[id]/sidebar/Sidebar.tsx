@@ -9,16 +9,19 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarTrigger
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 
 import { Home, Settings, LayoutDashboard } from "lucide-react"
 
 export function AppSidebar() {
-  return (
-    <Sidebar side="right" className="relative">
 
-      <div className="absolute top-2 -left-5 bg-gray-200 rounded-full">
+  return (
+
+      <Sidebar side="right" className="fixed top-[64px] right-0 h-[calc(100vh-64px)] z-40">
+
+
+      <div className="absolute top-2 -left-4 bg-slate-200 rounded-[8px]">
 
         <SidebarTrigger size="icon-lg" />
       </div>
