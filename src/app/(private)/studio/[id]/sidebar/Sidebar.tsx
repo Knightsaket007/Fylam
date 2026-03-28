@@ -9,7 +9,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarTrigger,
+  // ❌ SidebarTrigger hata diya
 } from "@/components/ui/sidebar"
 
 import { Home, Settings, LayoutDashboard } from "lucide-react"
@@ -18,14 +18,16 @@ export function AppSidebar() {
 
   return (
 
-      <Sidebar side="right" className="fixed top-[64px] right-0 h-[calc(100vh-64px)] z-40">
+    <Sidebar
+      side="right"
+      className="h-[calc(100vh-64px)]"   // ❌ fixed, right, lg:w-96 hata diya
+      style={{
+        "--sidebar-width": "24rem",       // ✅ width yaha set ki
+      } as React.CSSProperties}
+    >
 
-
-      <div className="absolute top-2 -left-4 bg-slate-200 rounded-[8px]">
-
-        <SidebarTrigger size="icon-lg" />
-      </div>
-
+      {/* ❌ trigger block hata diya */}
+      
       {/* HEADER */}
       <SidebarHeader>
         <h2 className="text-lg font-semibold px-2">Studio</h2>

@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { StudioProvider, useStudio } from "./context/StudioContext";
 import { getLastFieldId } from "@/utils/studio/getLastField";
 
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "./sidebar/Sidebar"
 
 export default function StudioLayout({
@@ -53,7 +53,11 @@ export const SubLayout = ({ children }: { children: React.ReactNode; }) => {
 
           </main>
 
-           <AppSidebar />
+          <AppSidebar />
+
+          <div className="fixed top-[70px] right-4 z-50">
+            <SidebarTrigger />
+          </div>
 
         </div>
       </SidebarProvider>
