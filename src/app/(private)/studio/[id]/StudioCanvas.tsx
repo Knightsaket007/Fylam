@@ -136,16 +136,20 @@ export default function StudioCanvas() {
         ))}
 
 
-        <DraggableWrapper
-          id={"123"}
-          x={20}
-          y={20}
-          width={200}
-          // isActive={true}
-          // setActive={(id) => setActiveField({ lastId: id })}
-        >
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE2AsWE5i8BSgaQn8aWEV97tRULftod6Ca4ikmegakxwAMtz7lc9I5VZo&s=10" className="w-full" />
-        </DraggableWrapper>
+
+        {/* =---=- Image testing =-=-=-=-=- */}
+        {Object.entries(fields).map(([id, field]) => (
+          <DraggableWrapper
+            key={id}
+            id={id}
+            x={field.x}
+            y={field.y}
+            width={field.width}
+          >
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE2AsWE5i8BSgaQn8aWEV97tRULftod6Ca4ikmegakxwAMtz7lc9I5VZo&s=10" className="w-full" />
+          </DraggableWrapper>
+        ))}
+        {/* =---=- Image testing =-=-=-=-=- */}
 
 
         <Tooltip>
