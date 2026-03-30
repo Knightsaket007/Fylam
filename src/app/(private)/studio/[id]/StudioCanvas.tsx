@@ -141,10 +141,10 @@ export default function StudioCanvas() {
           x={20}
           y={20}
           width={200}
-          isActive={true}
+          // isActive={true}
           // setActive={(id) => setActiveField({ lastId: id })}
         >
-          <img src="/demo.png" className="w-full" />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE2AsWE5i8BSgaQn8aWEV97tRULftod6Ca4ikmegakxwAMtz7lc9I5VZo&s=10" className="w-full" />
         </DraggableWrapper>
 
 
