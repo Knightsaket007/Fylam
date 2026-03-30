@@ -9,7 +9,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  // ❌ SidebarTrigger hata diya
 } from "@/components/ui/sidebar"
 
 import { Home, Settings, LayoutDashboard } from "lucide-react"
@@ -20,20 +19,18 @@ export function AppSidebar() {
 
     <Sidebar
       side="right"
-      className="h-[calc(100vh-64px)]"   // ❌ fixed, right, lg:w-96 hata diya
+      className="h-[calc(100vh-64px)]"   
       style={{
-        "--sidebar-width": "24rem",       // ✅ width yaha set ki
+        "--sidebar-width": "24rem",    
       } as React.CSSProperties}
     >
 
-      {/* ❌ trigger block hata diya */}
-      
-      {/* HEADER */}
+ 
       <SidebarHeader>
         <h2 className="text-lg font-semibold px-2">Studio</h2>
       </SidebarHeader>
 
-      {/* CONTENT */}
+      
       <SidebarContent>
 
         <SidebarGroup>
@@ -65,7 +62,7 @@ export function AppSidebar() {
 
       </SidebarContent>
 
-      {/* FOOTER */}
+
       <SidebarFooter>
         <p className="text-xs text-muted-foreground px-2">
           © 2026 Studio

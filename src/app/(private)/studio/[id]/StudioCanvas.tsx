@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/tooltip"
 import { useStudio } from "./context/StudioContext";
 import { getLastFieldId } from "@/utils/studio/getLastField";
+import DraggableWrapper from "./draggable/Draggable";
 
 export default function StudioCanvas() {
   const { setNodeRef } = useDroppable({
@@ -90,8 +91,8 @@ export default function StudioCanvas() {
     setFields(prev => ({
       ...prev,
       [id]: {
-        x: (activeField?.maxX ?? 0) ,
-        y: (activeField?.maxY ?? 0)+20,
+        x: (activeField?.maxX ?? 0),
+        y: (activeField?.maxY ?? 0) + 20,
         width: 150,
         height: 40,
         text: "New Text",
@@ -134,6 +135,17 @@ export default function StudioCanvas() {
           />
         ))}
 
+
+        <DraggableWrapper
+          id={"123"}
+          x={20}
+          y={20}
+          width={200}
+          isActive={true}
+          // setActive={(id) => setActiveField({ lastId: id })}
+        >
+          <img src="/demo.png" className="w-full" />
+        </DraggableWrapper>
 
 
         <Tooltip>
