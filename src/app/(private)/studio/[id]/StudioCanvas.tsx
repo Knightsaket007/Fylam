@@ -145,6 +145,8 @@ export default function StudioCanvas() {
             x={field.x}
             y={field.y}
             width={field.width}
+            // onResize={(id, w, h) => updateField(id, { width: w })}
+
           >
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE2AsWE5i8BSgaQn8aWEV97tRULftod6Ca4ikmegakxwAMtz7lc9I5VZo&s=10" className="w-full" />
           </DraggableWrapper>

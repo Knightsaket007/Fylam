@@ -10,10 +10,11 @@ type DraggableItemProps = {
   x: number;
   y: number;
   width?: number;
+  height?: number;
 
   children: React.ReactNode;
 
-  onResize?: (id: string, width: number) => void;
+  onResize?: (id: string, width: number, height: number) => void;
   onHeightChange?: (id: string, height: number) => void;
 };
 
@@ -22,6 +23,7 @@ export default function DraggableItem({
   x,
   y,
   width,
+  height,
   children,
   onResize,
   onHeightChange,
@@ -30,16 +32,18 @@ export default function DraggableItem({
   const { attributes, listeners, setNodeRef, transform } =
     useDraggable({ id });
 
+  const ref = useRef<HTMLDivElement>(null);
+
   const style = {
     position: "absolute" as const,
     left: x,
     top: y,
     transform: CSS.Translate.toString(transform),
+    width: width,
+    height: height,
   };
 
-  // height tracking (optional)
-  const ref = useRef<HTMLDivElement>(null);
-
+  // auto height tracking (optional)
   useLayoutEffect(() => {
     if (!ref.current || !onHeightChange) return;
 
@@ -52,19 +56,28 @@ export default function DraggableItem({
     return () => observer.disconnect();
   }, []);
 
-  // resize handler (optional)
+  // 🔥 RESIZE (width + height)
   const startResize = (e: React.MouseEvent) => {
-    if (!onResize || !width) return;
+    if (!onResize || !ref.current) return;
 
     e.preventDefault();
     e.stopPropagation();
 
     const startX = e.clientX;
-    const startWidth = width;
+    const startY = e.clientY;
+
+    const startWidth = ref.current.offsetWidth;
+    const startHeight = ref.current.offsetHeight;
 
     const onMove = (moveEvent: MouseEvent) => {
       const newWidth = startWidth + (moveEvent.clientX - startX);
-      onResize(id, Math.max(40, newWidth));
+      const newHeight = startHeight + (moveEvent.clientY - startY);
+
+      onResize(
+        id,
+        Math.max(40, newWidth),
+        Math.max(40, newHeight)
+      );
     };
 
     const onUp = () => {
@@ -102,23 +115,27 @@ export default function DraggableItem({
       </button>
 
       {/* 🔥 CONTENT */}
-      <div style={{ width }}>
+      <div className="w-full h-full">
         {children}
       </div>
 
-      {/* 🔥 RESIZE (optional) */}
-      {onResize && width && (
+      {/* 🔥 CORNER RESIZE HANDLE */}
+      {onResize && (
         <div
           onMouseDown={startResize}
           className="
             absolute
-            right-[-5px]
-            top-0
-            h-full
-            w-2
-            cursor-ew-resize
+            bottom-[-6px]
+            right-[-6px]
+            h-4
+            w-4
+            cursor-nwse-resize
             opacity-0
             group-hover:opacity-100
+            bg-white
+            border
+            rounded-sm
+            shadow
           "
         />
       )}
