@@ -9,6 +9,8 @@ type Field = {
   text: string;
   width: number;
   height: number;
+  src?: string;
+  type?: "text" | "image" | "line";
 };
 
 type Fields = Record<UniqueIdentifier, Field>;
